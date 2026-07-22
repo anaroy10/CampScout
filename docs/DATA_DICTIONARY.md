@@ -2,7 +2,7 @@
 
 ## Status and conventions
 
-This dictionary describes the implemented Recreation Area/activity, campground, national-park, and park-distance processed CSVs. It is not a deployed SQLite schema. SQLite type affinities, nullability, constraints, and indexes must be finalized before DDL is written.
+This dictionary describes the implemented processed CSVs and deployed SQLite schema. The generated local database is built at `data/campscout.db` with Python's standard-library `sqlite3` module.
 
 The current snapshot was formally profiled with `python -m etl.profile_raw_data`. Generated column types, missingness, distinct counts, maximum text lengths, samples, and key checks are recorded under `reports/profiling/`; the facts below do not replace those generated reports.
 
@@ -15,7 +15,7 @@ Conventions:
 - Latitude and longitude require range validation before a row participates in distance search.
 - Activity-phase processed CSVs retain the literal uppercase source column names. Proposed future database field names may use snake case.
 
-The future relational database will be generated at `data/campscout.db` from all six processed CSVs. Its schema must preserve the keys and normalized relationships documented here with primary keys, foreign keys, uniqueness and check constraints, appropriate indexes, transactional loading, and post-load validation. Every connection must enable SQLite foreign-key enforcement. These database details are requirements, not a claim that DDL or a loader already exists.
+The relational database is generated from all six processed CSVs. All six tables are `STRICT`; identifiers and ISO dates are TEXT, booleans are checked INTEGER values, coordinates and distances are REAL, and descriptive fields are unbounded TEXT. Every connection enables and verifies SQLite foreign-key enforcement.
 
 ## `national_park`
 
@@ -99,6 +99,8 @@ Implemented artifact: `data/processed/recreation_areas.csv`. It contains one row
 | `OPENSTATUS` | Original operational status | Preserved normalized text; `unknown` or `none` is not converted to `closed` |
 | `SHAPE` | Source shape value | Preserved when present; blank remains blank |
 
+In SQLite, processed `X` and `Y` become nullable REAL `longitude` and `latitude` with range checks. Processed `LONGITUDE` and `LATITUDE` remain auditable as `source_longitude` and `source_latitude` TEXT. This distinction is intentional: the latter source pair includes swapped and projected values that the Recreation Area ETL has not validated, so the database neither invents corrections nor misrepresents them as usable geographic coordinates. `SPOTLIGHTDISPLAY` and `ATTRACTIONDISPLAY` become checked INTEGER booleans.
+
 The generated snapshot has 14,469 Recreation Area rows and no Recreation Area attribute conflicts after normalization.
 
 ## `activity`
@@ -148,11 +150,21 @@ The distance starts at the park's representative source coordinate. It is not ro
 | Campground type | Use only approved categories derived from `site_subtype` profiling |
 | Radius | Compare a calculated `distance_km` to the positive user-supplied radius |
 
+## SQLite relational constraints
+
+- Entity primary keys are `national_parks.park_id`, `recreation_areas.recarea_id`, `activities.activity_id`, and `campgrounds.campground_id`.
+- `globalid` remains unique and `campground_id = globalid` is enforced. `site_id` is preserved as TEXT without uniqueness.
+- `campgrounds.recarea_id` is nullable and references `recreation_areas`.
+- The Recreation Area activity and park distance tables use composite primary keys and foreign keys to both parents.
+- Park and campground coordinates are required and range-checked; Recreation Area usable coordinates are nullable and range-checked.
+- Campground type, fee state, water category, and restroom category use CHECK constraints that preserve `UNKNOWN`.
+- Distance must be non-negative. Indexes support Recreation Area joins, reverse bridge lookups, campground distance lookups, and future park/radius access.
+
 ## Unresolved dictionary items
 
 - Whether `globalid` remains stable and unique across future source snapshots; the current phase validates every run and fails rather than silently replacing it.
 - Whether unsupported recreation-site subtypes should be included in a future product scope change.
 - Whether reviewed duplicate candidates represent distinct facilities or source duplicates.
-- Final SQLite type affinities, maximum-length checks where justified, indexes, and nullability.
+- Whether future source snapshots continue to satisfy every current NOT NULL and category constraint; builds intentionally fail on contract drift.
 
 These are profiling or design tasks, not gaps to fill by assumption.

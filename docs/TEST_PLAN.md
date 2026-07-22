@@ -2,7 +2,7 @@
 
 ## Status
 
-Executable profiling and CSV ETL tests are implemented. Database and application sections remain the verification plan for future phases. Tests use small fixtures and temporary output directories and never modify files under `data/raw/`.
+Executable profiling, CSV ETL, and SQLite database tests are implemented. Application tests remain a future phase. Tests use small fixtures and temporary output directories and never modify files under `data/raw/`.
 
 ## Test principles
 
@@ -79,22 +79,22 @@ The current hashes in `DATA_SOURCES.md` may be used to verify that local scaffol
 
 ## Database tests
 
-Use a temporary SQLite database file created under the test framework's temporary directory. Verify:
+The database suite uses temporary SQLite database files created under the test framework's temporary directory and verifies:
 
 - database creation from all six processed CSVs succeeds without raw inputs;
 - primary, unique, and foreign-key constraints match the documented logical model;
 - required check constraints and indexes exist and are exercised;
 - every connection enables `PRAGMA foreign_keys = ON`;
-- repeated loads are idempotent or fail in the explicitly documented way;
+- existing targets are not overwritten, and reset is restricted to `data/campscout.db`;
 - a load rolls back on failure rather than leaving a partial dataset;
 - generated row counts and relationships match the processed inputs;
 - unknown states survive round trips;
 - Unicode and long source text survive round trips;
 - all Python values are bound with SQLite `?` or named placeholders;
 - application connections are read-only where practical;
-- activity filters join through Recreation Areas;
-- no campground-to-park foreign key exists; and
-- radius, activity, fee, water, restroom, and type filters compose correctly.
+- no campground-to-park foreign key or direct campground-activity relationship exists.
+
+Application query composition remains deferred until the application query layer is implemented.
 
 ## Application tests
 

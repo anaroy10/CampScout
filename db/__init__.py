@@ -1,1 +1,1 @@
-"""CampScout database package placeholder."""
+"""CampScout SQLite database package."""

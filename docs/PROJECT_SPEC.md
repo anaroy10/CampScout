@@ -96,4 +96,4 @@ Source columns related to unsupported features may be retained in immutable raw 
 
 ## Current phase
 
-Raw profiling and the complete deterministic CSV ETL are implemented, including national-park cleaning and the full valid park-campground distance matrix. The SQLite schema and database builder, data-access queries, and Streamlit interface remain future phases.
+Raw profiling, the complete deterministic CSV ETL, and the SQLite schema, builder, connection factory, and validator are implemented. Data-access queries and the Streamlit interface remain future phases.
