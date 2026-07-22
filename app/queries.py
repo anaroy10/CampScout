@@ -43,6 +43,12 @@ SELECT
     c.name,
     c.campground_type,
     c.recarea_id,
+    ra.name AS recreation_area_name,
+    CASE WHEN EXISTS (
+        SELECT 1
+        FROM recreation_area_activities AS activity_info
+        WHERE activity_info.recarea_id = c.recarea_id
+    ) THEN 1 ELSE 0 END AS has_activity_information,
     c.fee_charged,
     c.fee_type,
     c.fee_description,
@@ -58,6 +64,7 @@ SELECT
     c.official_url
 FROM park_campground_distances AS d
 JOIN campgrounds AS c ON c.campground_id = d.campground_id
+LEFT JOIN recreation_areas AS ra ON ra.recarea_id = c.recarea_id
 """
 
 CAMPGROUND_DETAILS_SQL = """

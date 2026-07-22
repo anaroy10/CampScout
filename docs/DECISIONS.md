@@ -164,6 +164,16 @@ Multiple activities use a dynamically sized list of `?` placeholders and group b
 
 The justified application indexes are `(park_id, distance_km, campground_id)` on distances, `(activity_id, recarea_id)` on the activity bridge, and `(recarea_id)` on campgrounds. Current-data plans use the covering distance index for park/radius lookup and order, and use the reverse activity index for selected activities. Standalone category indexes are not added because the evaluated core plans continued to drive from distance candidates and fetch campgrounds by primary key.
 
+## D-023 — Keep Streamlit state separate from database state
+
+**Status:** Accepted and implemented
+
+Streamlit caches only stable park and activity result data. It never caches or shares a mutable SQLite connection, and every search or detail operation uses the read-only query layer. Search state contains at most 500 matching rows and is paginated for display; the full distance matrix is never loaded into Python. The built-in map distinguishes the selected park from returned campgrounds without adding another mapping dependency.
+
+The executable boundary is the repository-root `streamlit_app.py`, which imports `main` from the `app` package. `app/app.py` remains an importable package module and is not a direct Streamlit script, preventing its filename from shadowing the `app` package.
+
+The interface preserves unknown and explicit negative amenity categories, shows details on demand, and uses the documented straight-line-distance interpretation. A missing database produces a generic setup message with `python -m db.build_database --reset` and does not reveal the resolved local path.
+
 ## Open questions requiring evidence
 
 1. Is `globalid` stable and unique across multiple source snapshots, or only within the current file?

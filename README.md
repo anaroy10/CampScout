@@ -63,7 +63,7 @@ No database server, database user, password, host, port, or mandatory environmen
 
 ## Current implementation status
 
-Raw-data profiling, the complete CSV transformation pipeline, the SQLite database layer, and the read-only application query layer are implemented. The Streamlit interface is not. The pipeline cleans Recreation Areas and activities, cleans campgrounds, cleans national parks, and calculates every valid park-campground distance. The campground phase uses `data/processed/recreation_areas.csv` only to validate Recreation Area identifiers extracted from USDA portal URLs; it does not fuzzy-link unmatched records.
+Raw-data profiling, the complete CSV transformation pipeline, the SQLite database and query layers, and the Streamlit application are implemented. The pipeline cleans Recreation Areas and activities, cleans campgrounds, cleans national parks, and calculates every valid park-campground distance. The campground phase uses `data/processed/recreation_areas.csv` only to validate Recreation Area identifiers extracted from USDA portal URLs; it does not fuzzy-link unmatched records.
 
 Run an individual phase from the repository root when needed:
 
@@ -124,25 +124,23 @@ The builder loads parent tables before child tables in one explicit transaction,
 
 Every user value is bound with SQLite `?` placeholders. The only dynamic SQL structure is a trusted optional-predicate allow-list and the generated number of placeholders for selected activity IDs.
 
+## Run CampScout
+
+After building, indexing, and validating the database, start the application from the repository root:
+
+```powershell
+python -m streamlit run streamlit_app.py
+```
+
+The interface supports park and radius selection, ALL-selected-activity matching, optional campground and amenity filters, resettable controls, distance-ordered paginated results, a park/campground map, and on-demand campground details. Stable park and activity lookups use `st.cache_data`; search and detail queries still open short-lived read-only connections and never load the complete distance matrix into Python.
+
 Run all tests with:
 
 ```powershell
 pytest -q
 ```
 
-National-park cleaning, distance generation, the SQLite database layer, and the application query layer are implemented. The Streamlit application is not implemented yet.
-
-## Future application command — not implemented yet
-
-The following later-stage application command does **not** work yet because its entry point does not exist:
-
-```powershell
-# NOT IMPLEMENTED: launch the Streamlit interface
-streamlit run app/main.py
-
-```
-
-Do not infer implementation details from this placeholder command. It may change when the interface is designed. The repository does not yet contain a Streamlit page.
+National-park cleaning, distance generation, the SQLite layers, and the Streamlit application are implemented.
 
 ## Documentation
 

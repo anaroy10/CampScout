@@ -96,4 +96,4 @@ Source columns related to unsupported features may be retained in immutable raw 
 
 ## Current phase
 
-Raw profiling, the complete deterministic CSV ETL, the SQLite schema, builder, connection factory and validator, and the read-only data-access queries are implemented. The Streamlit interface remains a future phase.
+Raw profiling, the complete deterministic CSV ETL, the SQLite schema, builder, connection factory and validator, the read-only data-access queries, and the Streamlit application are implemented.

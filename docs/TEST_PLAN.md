@@ -2,7 +2,7 @@
 
 ## Status
 
-Executable profiling, CSV ETL, and SQLite database tests are implemented. Application tests remain a future phase. Tests use small fixtures and temporary output directories and never modify files under `data/raw/`.
+Executable profiling, CSV ETL, SQLite database/query, and non-visual Streamlit application tests are implemented. Tests use small fixtures and temporary output directories and never modify files under `data/raw/`.
 
 ## Test principles
 

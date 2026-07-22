@@ -184,6 +184,10 @@ def test_search_orders_by_distance_and_keeps_unlinked_without_activity_filter(
         "camp-one",
     ]
     assert results[0]["recarea_id"] is None
+    assert results[0]["recreation_area_name"] is None
+    assert results[0]["has_activity_information"] == 0
+    assert results[1]["recreation_area_name"] == "Area One"
+    assert results[1]["has_activity_information"] == 1
 
 
 def test_search_requires_all_distinct_selected_activities(query_database):

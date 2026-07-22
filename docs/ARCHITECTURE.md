@@ -2,7 +2,7 @@
 
 ## Status
 
-The profiling, CSV ETL, SQLite database, and read-only application query layers are implemented. The Streamlit page remains a future phase.
+The profiling, CSV ETL, SQLite database, read-only query, and Streamlit presentation layers are implemented.
 
 ## Component boundaries
 
@@ -44,7 +44,13 @@ Executable profiling and ETL modules are present under `etl/`. The SQLite schema
 5. Write deterministic processed artifacts under `data/processed/` and profiling output under `reports/profiling/`.
 6. Build `data/campscout.db` from all six processed CSVs using one explicit transaction, database constraints, and parameterized statements.
 7. Validate database row counts, keys, foreign keys, controlled vocabularies, matrix cardinality, integrity constraints, and required indexes before accepting the generated database.
-8. Query SQLite through the small read-only data-access layer; the future Streamlit layer must not construct SQL from string interpolation.
+8. Query SQLite through the small read-only data-access layer; Streamlit passes filter state to that layer and does not construct SQL.
+
+## Streamlit presentation
+
+`streamlit_app.py` is the project-root executable entrypoint and imports the application module from `app/app.py`. Keeping the executable outside the package prevents the `app.py` filename from shadowing the `app` package during Streamlit startup. Stable park and activity lookups are cached as data, never as a mutable SQLite connection. Searches are capped at 500 database rows and paginated in the interface; detail and Recreation Area activity data are loaded only for the selected campground. The built-in Streamlit map receives only the selected park and bounded returned campgrounds, with distinct colors and marker sizes.
+
+The UI preserves `UNKNOWN`, `NONE`, and `NOT_AVAILABLE` as different display states, uses the documented straight-line-distance wording, and shows a database setup command without exposing the resolved local path. It does not expose ratings, reviews, hookups, vehicle guidance, booking, or recommendations.
 
 The six processed CSVs are committed so a clean clone can reproduce the future database-build workflow without possessing the raw source files. Raw CSVs remain excluded from Git, and running the complete ETL still requires obtaining the original sources. Processed CSVs are published only by the ETL pipeline.
 
