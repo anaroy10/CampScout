@@ -59,24 +59,41 @@ Edit `.env` locally with the MySQL connection values. The `.env` file is ignored
 
 ## Current implementation status
 
-Only the repository scaffold and planning documentation exist. The source files have been inspected to document their observed structure, but no ETL pipeline, processed dataset, database loader, SQL query, Streamlit application, or executable test suite has been implemented.
+Raw-data profiling and the Recreation Area/activity cleaning phase are implemented. The activity phase reads only `data/raw/Recreation_Area_Activities.csv` and writes three processed CSVs plus summary, conflict, and dropped-row audit reports.
+
+Run the standalone phase from the repository root:
+
+```powershell
+python -m etl.clean_activities
+```
+
+The current pipeline entry point invokes that phase and explicitly reports the unimplemented later phases:
+
+```powershell
+python -m etl.run_pipeline
+```
+
+The cleaner keeps identifiers as text, normalizes whitespace and HTML entities, removes HTML from descriptive output, creates one canonical row per source identifier, and deduplicates `(RECAREAID, ACTIVITYID)` pairs. Missing-key source rows and conflicting repeated attributes remain available in generated audit reports. Processed CSVs use the literal source column names documented in `docs/DATA_DICTIONARY.md`.
+
+Run all tests with:
+
+```powershell
+pytest
+```
+
+Campground cleaning, national-park cleaning, the MySQL loader and queries, and the Streamlit application are not implemented yet.
 
 ## Future commands — not implemented yet
 
-The following examples describe the intended developer experience. They do **not** work yet because their entry points do not exist:
+The following later-stage commands do **not** work yet because their entry points do not exist:
 
 ```powershell
-# NOT IMPLEMENTED: profile and transform the raw data
-python -m etl.pipeline
-
 # NOT IMPLEMENTED: create/load the MySQL schema
 python -m db.load
 
 # NOT IMPLEMENTED: launch the Streamlit interface
 streamlit run app/main.py
 
-# NOT IMPLEMENTED: run the future project test suite
-pytest
 ```
 
 Do not infer implementation details from these placeholder command names. They may change when the relevant component is designed.

@@ -26,7 +26,7 @@ The formal profiler found that `site_cn`, `globalid`, and `objectid` are each co
 
 The activity source is organized by `RECAREAID` and `ACTIVITYID`. Activities belong to Recreation Areas, and the application reaches them through a validated campground-to-Recreation Area relationship. There is no direct campground-to-activity association.
 
-The current profile supports the proposed area-activity bridge: it found 14,469 distinct non-missing Recreation Area IDs, 79 distinct non-missing activity IDs, no duplicate non-missing `(RECAREAID, ACTIVITYID)` pairs, and 769 rows missing either association identifier. Missing-key rows cannot form bridge records; no bridge has been implemented in this phase.
+The implemented area-activity bridge contains 51,713 unique `(RECAREAID, ACTIVITYID)` pairs. The source has 14,469 non-missing Recreation Area IDs, 79 non-missing activity IDs, no duplicate non-missing pairs in this snapshot, and 769 rows missing either association identifier. Missing-key rows do not form bridge records and are retained in a generated audit report.
 
 ## D-005 — Calculate park proximity
 
@@ -79,6 +79,16 @@ Database configuration is supplied through the documented environment variables.
 **Status:** Accepted
 
 The supported development environment is Windows, VS Code, Python, MySQL, and Streamlit. Documentation and future automation should provide PowerShell-compatible commands and use relative repository paths.
+
+## D-013 — Canonicalize repeated Recreation Area and Activity values deterministically
+
+**Status:** Accepted and implemented for the activity source
+
+The activity cleaning phase preserves identifiers as text and uses literal source column names in its processed CSVs. For every attribute repeated under one `RECAREAID` or `ACTIVITYID`, blank values are ignored and the most frequent normalized non-blank value is selected. Ties are resolved by case-insensitive lexical order and then literal lexical order. All distinct non-blank disagreements, their frequencies, and the selected value are written to `reports/generated/activity_conflicts.csv`.
+
+Whitespace and HTML entities are normalized. HTML markup is removed from Recreation Area descriptions and accessibility text while meaningful text boundaries are retained. Opening-season values remain free text. The cleaner validates that every bridge key exists in the corresponding entity output before writing its artifacts.
+
+The current generated snapshot has no Recreation Area conflicts and 13 Activity conflicts, all in `PARENTACTIVITYID`. These values are preserved and reported as source facts; the cleaner does not infer or repair a hierarchy.
 
 ## Open questions requiring evidence
 

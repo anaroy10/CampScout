@@ -2,7 +2,7 @@
 
 ## Status and conventions
 
-This dictionary describes the intended canonical model. It is not a deployed MySQL schema. Types and nullability must be finalized through ETL profiling before DDL is written.
+This dictionary describes the implemented Recreation Area/activity processed CSVs and the intended model for later phases. It is not a deployed MySQL schema. Types and nullability for MySQL must be finalized before DDL is written.
 
 The current snapshot was formally profiled with `python -m etl.profile_raw_data`. Generated column types, missingness, distinct counts, maximum text lengths, samples, and key checks are recorded under `reports/profiling/`; the facts below do not replace those generated reports.
 
@@ -13,6 +13,7 @@ Conventions:
 - `UNKNOWN` means the source is blank, missing, or too ambiguous to classify. It is distinct from `NO`.
 - Columns ending in `_raw` preserve unnormalized source text.
 - Latitude and longitude require range validation before a row participates in distance search.
+- Activity-phase processed CSVs retain the literal uppercase source column names. Proposed future database field names may use snake case.
 
 ## `national_park`
 
@@ -76,39 +77,49 @@ Selected raw missingness in the current snapshot is: 0 of 32,114 for both `latit
 
 ## `recreation_area`
 
-| Proposed field | Meaning | Source / rule |
+Implemented artifact: `data/processed/recreation_areas.csv`. It contains one row per non-blank `RECAREAID`, sorted by the preserved text identifier. `OBJECTID` is excluded because it identifies source rows rather than Recreation Areas. Repeated non-blank values are resolved by frequency, with a case-insensitive lexical tie-break followed by the literal value; every disagreement is written to `reports/generated/activity_conflicts.csv`.
+
+| Processed field | Meaning | Source / rule |
 |---|---|---|
-| `recreation_area_id` | Preserved source identifier and candidate primary key | `RECAREAID`, ingested as text |
-| `name` | Recreation Area name | `RECAREANAME` |
-| `forest_name` | Managing forest label | `FORESTNAME` |
-| `official_url` | Source Recreation Area URL | `RECAREAURL` |
-| `latitude` | Recreation Area latitude | `LATITUDE`, range validated |
-| `longitude` | Recreation Area longitude | `LONGITUDE`, range validated |
-| `open_status_raw` | Original operational status | `OPENSTATUS`; do not collapse `unknown` or `none` into `closed` |
+| `RECAREAID` | Preserved source identifier and CSV key | Ingested as text; blank IDs do not create entity rows |
+| `X`, `Y` | Source map coordinates | Whitespace-normalized source text; no numeric coercion in this phase |
+| `RECAREANAME` | Recreation Area name | Whitespace and HTML entities normalized |
+| `LONGITUDE`, `LATITUDE` | Source Recreation Area coordinates | Preserved as normalized text; range validation remains required before distance use |
+| `RECAREAURL` | Source Recreation Area URL | Whitespace and HTML entities normalized |
+| `OPEN_SEASON_START`, `OPEN_SEASON_END` | Source opening-season descriptions | Preserved as free text; not coerced to dates |
+| `FORESTNAME` | Managing forest label | Whitespace and HTML entities normalized |
+| `MARKERTYPE`, `MARKERACTIVITY`, `MARKERACTIVITYGROUP` | Source marker metadata | Preserved as normalized text |
+| `RECAREADESCRIPTION` | Recreation Area description | HTML removed, entities decoded, whitespace normalized |
+| `SPOTLIGHTDISPLAY`, `ATTRACTIONDISPLAY` | Source display flags | Preserved source values; no boolean inference in this phase |
+| `ACCESSIBILITY` | Source accessibility description | HTML removed, entities decoded, whitespace normalized |
+| `OPENSTATUS` | Original operational status | Preserved normalized text; `unknown` or `none` is not converted to `closed` |
+| `SHAPE` | Source shape value | Preserved when present; blank remains blank |
 
-The activity source repeats these values. Future ETL must assert that every ID still maps consistently before deduplicating it into this entity.
-
-The current activity snapshot contains 14,469 distinct non-missing `RECAREAID` values. For each repeated ID, the profiler found no multiple non-missing values in the tested Recreation Area attributes (`X`, `Y`, name, coordinates, URL, season fields, forest, marker fields, description, display flags, accessibility, status, or shape). This snapshot evidence must be revalidated on future inputs.
+The generated snapshot has 14,469 Recreation Area rows and no Recreation Area attribute conflicts after normalization.
 
 ## `activity`
 
-| Proposed field | Meaning | Source / rule |
-|---|---|---|
-| `activity_id` | Preserved source activity ID | `ACTIVITYID`, ingested as text |
-| `name` | Activity name | `ACTIVITYNAME`; not unique in the current source |
-| `parent_activity_id_raw` | Preserved parent ID | `PARENTACTIVITYID` |
-| `parent_activity_name_raw` | Preserved parent name | `PARENTACTIVITYNAME` |
+Implemented artifact: `data/processed/activities.csv`. It contains one row per non-blank `ACTIVITYID`, sorted by the preserved text identifier. The same deterministic frequency rule used for Recreation Areas resolves repeated attributes.
 
-The current snapshot contains 79 distinct non-missing activity IDs and 77 distinct non-missing activity names. Every activity ID maps to one name, but `Picnicking` maps to IDs `69` and `70`, while `Scenic Driving` maps to IDs `75` and `105`. Code must join by ID, not name.
+| Processed field | Meaning | Source / rule |
+|---|---|---|
+| `ACTIVITYID` | Preserved source activity ID and CSV key | Ingested as text; blank IDs do not create entity rows |
+| `ACTIVITYNAME` | Activity name | Normalized text; not a unique identifier |
+| `PARENTACTIVITYID` | Preserved parent ID | Ingested as text; blank values are ignored during canonical selection |
+| `PARENTACTIVITYNAME` | Preserved parent name | Normalized text; blank values are ignored during canonical selection |
+
+The generated snapshot contains 79 activity rows. It retains separate IDs for non-unique names: `Picnicking` maps to IDs `69` and `70`, while `Scenic Driving` maps to IDs `75` and `105`. Code must join by ID, not name. Thirteen source conflicts in non-blank parent IDs are reported rather than hidden.
 
 ## `recreation_area_activity`
 
-| Proposed field | Meaning | Source / rule |
-|---|---|---|
-| `recreation_area_id` | Associated Recreation Area | `RECAREAID`; foreign key to `recreation_area` |
-| `activity_id` | Associated activity | `ACTIVITYID`; foreign key to `activity` |
+Implemented artifact: `data/processed/recreation_area_activities.csv`.
 
-The proposed composite primary key is `(recreation_area_id, activity_id)`. The current source has no duplicate non-missing pairs, while 769 rows are missing either `RECAREAID` or `ACTIVITYID` and therefore cannot populate this association. No `campground_id` belongs in this table.
+| Processed field | Meaning | Source / rule |
+|---|---|---|
+| `RECAREAID` | Associated Recreation Area | Foreign key to `recreation_areas.csv.RECAREAID` |
+| `ACTIVITYID` | Associated activity | Foreign key to `activities.csv.ACTIVITYID` |
+
+The composite CSV key is `(RECAREAID, ACTIVITYID)`. Duplicate source pairs are removed. The generated snapshot contains 51,713 relationships and no duplicate source pairs. Its 769 rows missing either required identifier are excluded from the relationship and preserved in `reports/generated/dropped_activity_rows.csv`. Foreign-key consistency is validated before any artifact is published. No campground identifier belongs in this table.
 
 ## Derived query value: `distance_km`
 
