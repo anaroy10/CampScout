@@ -59,29 +59,42 @@ Edit `.env` locally with the MySQL connection values. The `.env` file is ignored
 
 ## Current implementation status
 
-Raw-data profiling and the Recreation Area/activity cleaning phase are implemented. The activity phase reads only `data/raw/Recreation_Area_Activities.csv` and writes three processed CSVs plus summary, conflict, and dropped-row audit reports.
+Raw-data profiling, Recreation Area/activity cleaning, and campground cleaning are implemented. The campground phase reads `data/raw/Recreation_Sites_INFRA.csv`; it uses `data/processed/recreation_areas.csv` only to validate Recreation Area identifiers extracted from USDA portal URLs. It does not fuzzy-link unmatched records.
 
-Run the standalone phase from the repository root:
+Run either standalone cleaning phase from the repository root:
 
 ```powershell
 python -m etl.clean_activities
+python -m etl.clean_campgrounds
 ```
 
-The current pipeline entry point invokes that phase and explicitly reports the unimplemented later phases:
+The pipeline runs activities first and campgrounds second, then explicitly reports that national-park cleaning is not implemented:
 
 ```powershell
 python -m etl.run_pipeline
 ```
 
-The cleaner keeps identifiers as text, normalizes whitespace and HTML entities, removes HTML from descriptive output, creates one canonical row per source identifier, and deduplicates `(RECAREAID, ACTIVITYID)` pairs. Missing-key source rows and conflicting repeated attributes remain available in generated audit reports. Processed CSVs use the literal source column names documented in `docs/DATA_DICTIONARY.md`.
+The activity cleaner keeps identifiers as text, normalizes whitespace and HTML entities, removes HTML from descriptive output, creates one canonical row per source identifier, and deduplicates `(RECAREAID, ACTIVITYID)` pairs. Missing-key source rows and conflicting repeated attributes remain available in generated audit reports.
+
+The campground cleaner:
+
+- retains exact normalized subtypes `CAMPGROUND`, `GROUP CAMPGROUND`, and `HORSE CAMP`;
+- uses complete, unique `globalid` as `campground_id` while preserving `site_cn` and non-unique `site_id` as text;
+- chooses the display name from `public_site_name`, then `site_name`, then `recarea_name`;
+- preserves raw water/restroom descriptions beside documented normalized categories;
+- retains campgrounds whose USDA URL is missing, lacks `recid`, or names an unknown Recreation Area, and audits them in `reports/generated/unmatched_campgrounds.csv`;
+- reports exact normalized-name pairs within 1 km as possible duplicates without merging them; and
+- validates keys, categories, coordinates, Recreation Area links, identifier formatting, and output count before publishing artifacts.
+
+Outputs are `data/processed/campgrounds.csv`, `reports/generated/campground_cleaning_summary.json`, `reports/generated/unmatched_campgrounds.csv`, `reports/generated/duplicate_candidates.csv`, and `reports/generated/dropped_campground_rows.csv`. Unsupported source subtypes and invalid required data have separate drop categories.
 
 Run all tests with:
 
 ```powershell
-pytest
+pytest -q
 ```
 
-Campground cleaning, national-park cleaning, the MySQL loader and queries, and the Streamlit application are not implemented yet.
+National-park cleaning, the MySQL loader and application queries, and the Streamlit application are not implemented yet.
 
 ## Future commands — not implemented yet
 

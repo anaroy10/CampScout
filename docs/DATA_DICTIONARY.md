@@ -2,7 +2,7 @@
 
 ## Status and conventions
 
-This dictionary describes the implemented Recreation Area/activity processed CSVs and the intended model for later phases. It is not a deployed MySQL schema. Types and nullability for MySQL must be finalized before DDL is written.
+This dictionary describes the implemented Recreation Area/activity and campground processed CSVs plus the intended model for later phases. It is not a deployed MySQL schema. Types and nullability for MySQL must be finalized before DDL is written.
 
 The current snapshot was formally profiled with `python -m etl.profile_raw_data`. Generated column types, missingness, distinct counts, maximum text lengths, samples, and key checks are recorded under `reports/profiling/`; the facts below do not replace those generated reports.
 
@@ -37,43 +37,47 @@ There is intentionally no campground foreign key on this entity.
 
 ## `campground`
 
-The final campground primary key remains unselected. In the current 32,114-row snapshot, `site_cn`, `globalid`, and `objectid` are each complete and unique. `site_id` is complete but has 29,972 distinct values, 1,865 distinct duplicated values, and 2,142 duplicate excess rows; examples include the leading-zero value `01001`. Snapshot uniqueness does not establish stability across future source releases, so this profiler evidence does not by itself select the production key.
+Implemented artifact: `data/processed/campgrounds.csv`. The cleaner normalizes `site_subtype` by trimming, collapsing whitespace, and uppercasing, then retains only exact `CAMPGROUND`, `GROUP CAMPGROUND`, and `HORSE CAMP` values. The current output contains 4,810 records: 4,198, 431, and 181 respectively. These categories represent explicit campground entities with useful structured information; they do not imply ratings, reviews, or quality.
 
-Literal `site_subtype` counts include 4,198 `CAMPGROUND`, 431 `GROUP CAMPGROUND`, and 181 `HORSE CAMP` records (4,810 combined). These counts do not define the campground eligibility rule.
+`globalid` is the selected `campground_id`. Profiling found it non-null and unique in all 32,114 source rows, and validation confirms 4,810 distinct non-null values in the campground subset. `site_cn` was also complete and unique, but `globalid` is a source-issued UUID-like identifier and is used directly. `site_id` remains an audit attribute because only 29,972 of its 32,114 values are distinct. All identifiers are ingested and written as text, without numeric conversion.
 
-| Proposed field | Meaning | Source / rule |
+| Processed field | Meaning | Source / rule |
 |---|---|---|
-| `campground_id` | Optional internal surrogate key | Generated only if profiling selects the surrogate-key strategy |
-| `site_cn_raw` | Preserved site control number | `site_cn`; string even when numeric-looking or dotted |
-| `site_id_raw` | Preserved site ID | `site_id`; not a primary key in the inspected snapshot |
-| `globalid_raw` | Preserved source global ID | `globalid` |
-| `root_cn_raw` | Preserved hierarchy root | `root_cn` |
-| `parent_cn_raw` | Preserved hierarchy parent | `parent_cn` |
-| `name` | Selected campground display name | Deterministic preference among profiled name fields |
-| `name_raw` | Original `site_name` | `site_name` |
-| `public_name_raw` | Original public name | `public_site_name` |
-| `campground_type` | Controlled filter/display type | Derived only from an approved `site_subtype` mapping |
-| `site_subtype_raw` | Original subtype | `site_subtype` |
-| `recreation_area_id` | Deterministically linked Recreation Area, when resolved | Exact validated link; never a fuzzy auto-match |
-| `recreation_area_name_raw` | Source Recreation Area label | `recarea_name` and/or `parent_recarea`, kept for audit |
-| `latitude` | Validated campground latitude | `latitude` |
-| `longitude` | Validated campground longitude | `longitude` |
-| `fee_status` | `YES`, `NO`, or `UNKNOWN` | Map explicit `Y`/`N`; blank or unexpected value is `UNKNOWN` |
-| `fee_type_raw` | Original fee classification | `fee_type` |
-| `fee_description` | Source fee details | `fee_description` |
-| `water_status` | Controlled water category including `UNKNOWN` | Explicit, reviewed mapping from free text |
-| `water_details_raw` | Original water description | `water_availability` |
-| `restroom_type` | Controlled restroom category including `UNKNOWN` | Explicit, reviewed mapping from free text |
-| `restroom_details_raw` | Original restroom description | `restroom_availability` |
-| `directions` | User-facing source directions | Documented preference between `directions` and `site_directions` |
-| `closest_towns_raw` | Original nearby-town text | `closest_towns` |
-| `official_url` | Selected official informational URL | Deterministic allow-listed preference from source URL fields |
-| `usda_portal_url_raw` | Original USDA URL | `usda_portal_url` |
-| `recreation_gov_url_raw` | Original Recreation.gov URL | `rec1stop_url` |
+| `campground_id` | Campground CSV key | Exact preserved `globalid` |
+| `globalid` | Preserved selected source identifier | Exact preserved `globalid` |
+| `site_cn`, `site_id`, `objectid` | Preserved source identifiers | Trim surrounding whitespace only; retain leading zeroes and punctuation |
+| `root_cn`, `parent_cn` | Preserved source hierarchy identifiers | Trim surrounding whitespace only |
+| `name` | Campground display name | First non-blank of `public_site_name`, `site_name`, `recarea_name` |
+| `public_site_name`, `site_name`, `recarea_name` | Auditable source names | Whitespace normalized; blanks remain blank |
+| `site_subtype` | Supported normalized campground subtype | Trim/collapse whitespace, uppercase, then exact allow-list match |
+| `site_subtype_raw` | Original subtype text | Unmodified source field |
+| `recarea_id` | Optional validated Recreation Area link | Extract `recid` only from `usda_portal_url`; populate only when it exists in `recreation_areas.csv.RECAREAID` |
+| `recid_extracted` | URL-extracted candidate identifier | First non-blank case-insensitive `recid` query parameter, preserved as text |
+| `fee_charged` | Normalized fee state | Exact `Y` -> `YES`, exact `N` -> `NO`, otherwise `UNKNOWN` |
+| `fee_charged_raw` | Original fee flag | Unmodified `fee_charged` source field |
+| `fee_type`, `fee_description` | Source fee details | Whitespace normalized; no fee amounts inferred |
+| `total_capacity` | Safely parsed numeric capacity | Plain non-negative integer or decimal only; prose, signs, grouping separators, and scientific notation remain unparsed |
+| `total_capacity_raw` | Original capacity text | Unmodified source field |
+| `water_availability` | Normalized water category | One of `AVAILABLE`, `NOT_AVAILABLE`, `NATURAL_SOURCE`, `NEARBY`, `OTHER`, `UNKNOWN` |
+| `water_availability_raw` | Original water description | Unmodified source field |
+| `restroom_availability` | Normalized restroom category | One of `FLUSH`, `VAULT`, `COMPOSTING`, `PORTABLE`, `MULTIPLE`, `NONE`, `OTHER`, `UNKNOWN` |
+| `restroom_availability_raw` | Original restroom description | Unmodified source field |
+| `directions`, `site_directions` | Source direction fields | Kept separately; `directions` is the display field and is not backfilled from another source |
+| `closest_towns`, `operational_hours` | Source visitor information | Whitespace normalized; blanks remain blank |
+| `official_url` | Official campground information URL | Exact normalized `usda_portal_url`; no URL is invented or substituted |
+| `usda_portal_url`, `rec1stop_url` | Auditable source URLs | Preserved separately after whitespace normalization |
+| `latitude`, `longitude` | Campground coordinates | Source numeric text retained after finite range validation (`-90..90`, `-180..180`) |
+| `last_update` | Source update value | Preserved as normalized text; no unsupported date inference |
+
+Water normalization checks explicit alternative-source evidence and negative phrases before positive phrases. Nearby/adjacent water maps to `NEARBY`; water described as requiring treatment or filtering, or explicitly as an untreated creek, river, spring, stream, lake, or natural source, maps to `NATURAL_SOURCE`; explicit `no`, `none`, `not available`, `not provided`, offline, closed-system, or discontinued-pump wording maps to `NOT_AVAILABLE`; explicit potable/drinking/available, pump, faucet, hydrant, spigot, pressurized, gravity, or well wording maps to `AVAILABLE`; explicit non-potable, boil-only, or livestock/stock/trough text maps to `OTHER`; unclassified or unrelated text maps to `UNKNOWN`. Thus `No potable water available` cannot become `AVAILABLE`.
+
+Restroom normalization checks negative wording first. Explicit absence maps to `NONE`; recognized flush, vault/pit/outhouse, composting, and portable wording maps to its corresponding category; text containing more than one recognized type maps to `MULTIPLE`; generic text that clearly mentions a restroom, toilet, facility, or shower but not a supported type maps to `OTHER`; and blank, explicitly unknown, unrelated, or ambiguous text maps to `UNKNOWN`. Missing values never become `NONE`.
+
+Campgrounds with no validated link remain in this artifact with blank `recarea_id` and are written to `reports/generated/unmatched_campgrounds.csv` with one of three reasons: missing USDA URL, no `recid` query parameter, or extracted ID absent from the processed Recreation Areas. No fuzzy match is applied. Possible duplicates are exact normalized display-name pairs no more than 1 km apart; `reports/generated/duplicate_candidates.csv` provides both identifiers, names, coordinates, and Haversine distance for human review. No candidate is merged automatically.
 
 There is intentionally no `park_id` column. Unsupported hookup, rating, booking, and vehicle-recommendation fields are not part of this product model.
 
-Selected raw missingness in the current snapshot is: 0 of 32,114 for both `latitude` and `longitude`; 245 for `fee_charged`; 20,414 for `water_availability`; 20,345 for `restroom_availability`; 20,970 for `directions`; 21,765 for `usda_portal_url`; and 7 for `total_capacity`. Missing amenity values remain unknown, and no normalization mapping has been applied.
+The current campground-subset missingness is recorded in `reports/generated/campground_cleaning_summary.json` using 4,810—not the full 32,114 source rows—as the denominator. The summary also contains subtype, identifier, link, normalized category, drop, unmatched, and duplicate-pair counts.
 
 ## `recreation_area`
 
@@ -138,11 +142,9 @@ The composite CSV key is `(RECAREAID, ACTIVITYID)`. Duplicate source pairs are r
 
 ## Unresolved dictionary items
 
-- The authoritative campground eligibility rule and source hierarchy behavior.
-- The stable campground key across future source snapshots.
-- The exact deterministic link from a campground to `RECAREAID`.
-- Controlled category mappings for water, restrooms, and campground type.
-- Name, directions, and official-URL preference rules.
+- Whether `globalid` remains stable and unique across future source snapshots; the current phase validates every run and fails rather than silently replacing it.
+- Whether unsupported recreation-site subtypes should be included in a future product scope change.
+- Whether reviewed duplicate candidates represent distinct facilities or source duplicates.
 - Final SQL types, maximum lengths, indexes, and nullability.
 
 These are profiling or design tasks, not gaps to fill by assumption.

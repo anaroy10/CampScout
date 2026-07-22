@@ -14,11 +14,13 @@ All files under `data/raw/` are read-only inputs. Cleaning and normalization wri
 
 Raw identifiers are ingested as strings. This prevents leading-zero loss, float coercion, scientific notation, and accidental `.0` suffixes. The current site file contains values such as `01001` and dotted control numbers.
 
-## D-003 — Select the campground primary key after profiling
+## D-003 — Use `globalid` as the campground CSV key
 
-**Status:** Profiled snapshot; final selection remains provisional
+**Status:** Accepted and implemented for the current source contract
 
-The formal profiler found that `site_cn`, `globalid`, and `objectid` are each complete and unique across all 32,114 current recreation-site rows. `site_id` is complete but has only 29,972 distinct values: 1,865 values are duplicated, producing 2,142 duplicate excess rows. It will not be used as the global primary key. The remaining choice among a source identifier and a surrogate key stays provisional because one-snapshot uniqueness does not prove cross-release stability.
+The formal profiler found that `site_cn`, `globalid`, and `objectid` are each complete and unique across all 32,114 current recreation-site rows. `globalid` is selected as `campground_id` because it is a complete, unique, UUID-like source identifier. The campground cleaner revalidates non-nullness and uniqueness on every run and fails clearly if the contract changes. Cross-release stability remains an item to monitor.
+
+`site_id` is complete but has only 29,972 distinct values: 1,865 values are duplicated, producing 2,142 duplicate excess rows. It is preserved as text but is not the primary key. `site_cn`, `site_id`, `objectid`, `root_cn`, and `parent_cn` are never numerically coerced; source formatting such as leading zeroes and dotted control numbers is retained.
 
 ## D-004 — Model activities at Recreation Area level
 
@@ -90,16 +92,41 @@ Whitespace and HTML entities are normalized. HTML markup is removed from Recreat
 
 The current generated snapshot has no Recreation Area conflicts and 13 Activity conflicts, all in `PARENTACTIVITYID`. These values are preserved and reported as source facts; the cleaner does not infer or repair a hierarchy.
 
+## D-014 — Define the campground entity subset and display name
+
+**Status:** Accepted and implemented
+
+Campground eligibility is an exact match after trimming, collapsing whitespace, and uppercasing `site_subtype`. Only `CAMPGROUND`, `GROUP CAMPGROUND`, and `HORSE CAMP` are retained. They represent explicit campground entities with useful structured information; they are not described as better rated, better reviewed, or higher quality. Unsupported source rows are audited separately from rows with invalid required campground data.
+
+The display name is the first non-blank value in this fixed order: `public_site_name`, `site_name`, then `recarea_name`. Whitespace-only values count as missing. All three source name fields remain in the processed record for audit.
+
+## D-015 — Normalize campground water, restrooms, fees, and capacity conservatively
+
+**Status:** Accepted and implemented
+
+Raw water and restroom text is retained next to a controlled category. Negative phrases are evaluated before positive phrases. Water categories are `AVAILABLE`, `NOT_AVAILABLE`, `NATURAL_SOURCE`, `NEARBY`, `OTHER`, and `UNKNOWN`. Restroom categories are `FLUSH`, `VAULT`, `COMPOSTING`, `PORTABLE`, `MULTIPLE`, `NONE`, `OTHER`, and `UNKNOWN`. Specific phrase rules are documented in `docs/DATA_DICTIONARY.md` and covered by representative positive, negative, missing, multiple-type, natural-source, nearby, and ambiguous tests. Blank or ambiguous amenity values remain `UNKNOWN`, never an inferred negative.
+
+Only exact `Y` and `N` fee flags become `YES` and `NO`; all other values become `UNKNOWN`. Total capacity is parsed only from a plain non-negative integer or decimal representation. Raw fee and capacity fields remain alongside normalized values.
+
+## D-016 — Link campgrounds only through validated USDA URL `recid` values
+
+**Status:** Accepted and implemented
+
+The campground cleaner extracts the first non-blank case-insensitive `recid` query parameter only from `usda_portal_url`. It assigns `recarea_id` only when that exact text identifier exists in `data/processed/recreation_areas.csv`. A missing URL, URL without `recid`, or extracted identifier absent from the processed Recreation Areas leaves `recarea_id` blank. These campgrounds remain in `data/processed/campgrounds.csv` and are listed with evidence and a reason in `reports/generated/unmatched_campgrounds.csv`. Names are never used to infer or repair a link.
+
+## D-017 — Report possible campground duplicates without merging
+
+**Status:** Accepted and implemented
+
+A possible duplicate pair must have the same normalized display name and coordinates no more than 1 km apart by the Haversine formula with a 6,371.0088 km mean Earth radius. Name normalization uppercases and replaces punctuation/whitespace runs with a single space. Every candidate report row contains both source identifiers, both names, both coordinate pairs, and calculated distance. The threshold is a review heuristic, not evidence sufficient to merge records, so the cleaner never merges candidates.
+
 ## Open questions requiring evidence
 
-1. Which recreation-site records are actual campground entities rather than areas, units, or other facilities?
-2. Is `site_cn` or `globalid` stable and unique across multiple source snapshots, or only within the current file?
-3. Can `RECAREAID` be extracted deterministically from an authoritative campground URL, and how should conflicts be handled?
-4. Should the campground-to-Recreation Area relationship be one-to-one, optional many-to-one, or represented by an audited bridge?
-5. Which exact free-text values map to each supported water and restroom category?
-6. Which source field has precedence for campground name, directions, and official URL?
-7. Should distance be calculated in MySQL or in a Python service after a database bounding-box query?
+1. Is `globalid` stable and unique across multiple source snapshots, or only within the current file?
+2. Should the optional many-campgrounds-to-one-Recreation-Area link remain a nullable field when the MySQL schema is designed, or be represented by an audited relationship table?
+3. Which reported duplicate candidates represent distinct facilities, and which represent source duplicates?
+4. Should park-to-campground distance be calculated in MySQL or in a Python service after a database bounding-box query?
 
 Each answer must be based on profiling or an authoritative source definition, recorded here, reflected in the data dictionary, and covered by tests before implementation is declared complete.
 
-Current profiling narrows but does not close questions 1, 2, and 5: exact counts exist for `CAMPGROUND` (4,198), `GROUP CAMPGROUND` (431), and `HORSE CAMP` (181); three source columns are unique in this snapshot; and raw water/restroom frequencies are recorded. Category eligibility, cross-release identifier stability, and reviewed amenity mappings remain unresolved.
+The current cleaner resolves campground eligibility, current-snapshot key selection, URL-based Recreation Area validation, amenity mappings, display-name precedence, and the official URL rule. It does not claim cross-release key stability, adjudicate duplicate candidates, design the future database representation, or implement park-distance queries.

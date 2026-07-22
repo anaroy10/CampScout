@@ -353,7 +353,7 @@ def run_cleaning(
         "activity_conflict_count": len(activity_conflicts),
         "foreign_key_validation": "passed",
         "later_phases": {
-            "campgrounds": "not implemented",
+            "campgrounds": "implemented separately",
             "national_parks": "not implemented",
         },
     }
@@ -410,7 +410,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         "- Dropped relationship source rows: "
         f"{summary['dropped_relationship_source_row_count']}"
     )
-    print("Campground and national-park cleaning are not implemented yet.")
+    print("Campground cleaning is available as a separate phase.")
+    print("National-park cleaning is not implemented yet.")
     return 0
 
 
