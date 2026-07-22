@@ -1,0 +1,1 @@
+"""CampScout test package placeholder."""

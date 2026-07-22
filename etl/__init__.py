@@ -1,0 +1,1 @@
+"""CampScout ETL package placeholder."""

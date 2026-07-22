@@ -1,0 +1,8 @@
+pandas
+numpy
+python-dotenv
+mysql-connector-python
+streamlit
+beautifulsoup4
+rapidfuzz
+pytest
