@@ -4,6 +4,8 @@
 
 This dictionary describes the intended canonical model. It is not a deployed MySQL schema. Types and nullability must be finalized through ETL profiling before DDL is written.
 
+The current snapshot was formally profiled with `python -m etl.profile_raw_data`. Generated column types, missingness, distinct counts, maximum text lengths, samples, and key checks are recorded under `reports/profiling/`; the facts below do not replace those generated reports.
+
 Conventions:
 
 - All raw identifiers enter the pipeline as strings and remain available without formatting changes.
@@ -13,6 +15,8 @@ Conventions:
 - Latitude and longitude require range validation before a row participates in distance search.
 
 ## `national_park`
+
+The profiled file has 63 rows and 8 literal source columns. `Image` is empty in all 63 rows. Six `Name` values contain `*`; one of those names (`Wrangell–St. Elias *`) also contains unusual whitespace. No park name contains a bracketed citation in this snapshot. These are source observations only; no name cleanup has been implemented.
 
 | Proposed field | Meaning | Source / rule |
 |---|---|---|
@@ -32,7 +36,9 @@ There is intentionally no campground foreign key on this entity.
 
 ## `campground`
 
-The final campground primary key will be selected after profiling. site_id will not be used as the global primary key because it is duplicated. A unique source identifier such as site_cn or globalid, or a surrogate key, will be selected based on profiling evidence.
+The final campground primary key remains unselected. In the current 32,114-row snapshot, `site_cn`, `globalid`, and `objectid` are each complete and unique. `site_id` is complete but has 29,972 distinct values, 1,865 distinct duplicated values, and 2,142 duplicate excess rows; examples include the leading-zero value `01001`. Snapshot uniqueness does not establish stability across future source releases, so this profiler evidence does not by itself select the production key.
+
+Literal `site_subtype` counts include 4,198 `CAMPGROUND`, 431 `GROUP CAMPGROUND`, and 181 `HORSE CAMP` records (4,810 combined). These counts do not define the campground eligibility rule.
 
 | Proposed field | Meaning | Source / rule |
 |---|---|---|
@@ -66,6 +72,8 @@ The final campground primary key will be selected after profiling. site_id will 
 
 There is intentionally no `park_id` column. Unsupported hookup, rating, booking, and vehicle-recommendation fields are not part of this product model.
 
+Selected raw missingness in the current snapshot is: 0 of 32,114 for both `latitude` and `longitude`; 245 for `fee_charged`; 20,414 for `water_availability`; 20,345 for `restroom_availability`; 20,970 for `directions`; 21,765 for `usda_portal_url`; and 7 for `total_capacity`. Missing amenity values remain unknown, and no normalization mapping has been applied.
+
 ## `recreation_area`
 
 | Proposed field | Meaning | Source / rule |
@@ -80,6 +88,8 @@ There is intentionally no `park_id` column. Unsupported hookup, rating, booking,
 
 The activity source repeats these values. Future ETL must assert that every ID still maps consistently before deduplicating it into this entity.
 
+The current activity snapshot contains 14,469 distinct non-missing `RECAREAID` values. For each repeated ID, the profiler found no multiple non-missing values in the tested Recreation Area attributes (`X`, `Y`, name, coordinates, URL, season fields, forest, marker fields, description, display flags, accessibility, status, or shape). This snapshot evidence must be revalidated on future inputs.
+
 ## `activity`
 
 | Proposed field | Meaning | Source / rule |
@@ -89,7 +99,7 @@ The activity source repeats these values. Future ETL must assert that every ID s
 | `parent_activity_id_raw` | Preserved parent ID | `PARENTACTIVITYID` |
 | `parent_activity_name_raw` | Preserved parent name | `PARENTACTIVITYNAME` |
 
-The current snapshot shows that one activity ID maps to one name, but some names map to multiple IDs. Code must join by ID, not name.
+The current snapshot contains 79 distinct non-missing activity IDs and 77 distinct non-missing activity names. Every activity ID maps to one name, but `Picnicking` maps to IDs `69` and `70`, while `Scenic Driving` maps to IDs `75` and `105`. Code must join by ID, not name.
 
 ## `recreation_area_activity`
 
@@ -98,7 +108,7 @@ The current snapshot shows that one activity ID maps to one name, but some names
 | `recreation_area_id` | Associated Recreation Area | `RECAREAID`; foreign key to `recreation_area` |
 | `activity_id` | Associated activity | `ACTIVITYID`; foreign key to `activity` |
 
-The proposed composite primary key is `(recreation_area_id, activity_id)`. Rows lacking either member cannot populate this association. No `campground_id` belongs in this table.
+The proposed composite primary key is `(recreation_area_id, activity_id)`. The current source has no duplicate non-missing pairs, while 769 rows are missing either `RECAREAID` or `ACTIVITYID` and therefore cannot populate this association. No `campground_id` belongs in this table.
 
 ## Derived query value: `distance_km`
 

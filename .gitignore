@@ -15,6 +15,12 @@ data/raw/*.csv
 data/processed/*.csv
 reports/generated/*
 reports/profiling/*
+!reports/profiling/.gitkeep
+!reports/profiling/profile_summary.json
+!reports/profiling/column_profiles.csv
+!reports/profiling/key_analysis.csv
+!reports/profiling/value_examples.json
+!reports/profiling/data_quality_findings.md
 
 # Preserve documentation and placeholders
 !data/raw/README.md

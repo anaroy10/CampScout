@@ -1,0 +1,735 @@
+{
+  "generated_at_utc": "2026-07-22T18:33:04.388189+00:00",
+  "profiling_rules": {
+    "missing_value": "empty or whitespace-only CSV field",
+    "distinct_count": "distinct non-missing literal values",
+    "exact_duplicate_row_count": "repeated rows beyond the first occurrence",
+    "identifier_handling": "all CSV fields are read as strings; identifier-like columns infer as string",
+    "normalization_performed": false
+  },
+  "datasets": {
+    "Recreation_Sites_INFRA.csv": {
+      "relative_path": "data/raw/Recreation_Sites_INFRA.csv",
+      "encoding": "UTF-8 with optional BOM",
+      "file_size_bytes": 26316959,
+      "row_count": 32114,
+      "column_count": 138,
+      "column_names": [
+        "X",
+        "Y",
+        "objectid",
+        "site_cn",
+        "root_cn",
+        "parent_cn",
+        "region",
+        "security_id",
+        "managing_org",
+        "site_id",
+        "site_name",
+        "site_subtype",
+        "development_status",
+        "development_scale",
+        "poss_id",
+        "nrrs_id",
+        "total_capacity",
+        "fee_charged",
+        "fee_type",
+        "recarea_name",
+        "recarea_enable",
+        "recarea_description",
+        "recarea_status",
+        "parent_recarea",
+        "information_center",
+        "current_conditions",
+        "official_designation",
+        "fee_description",
+        "operational_hours",
+        "open_season",
+        "best_season",
+        "busiest_season",
+        "usage_level",
+        "pack_in_out",
+        "public_site_name",
+        "alias_name",
+        "alternative_name",
+        "site_address",
+        "mailing_address",
+        "physical_address",
+        "address_line1",
+        "address_line2",
+        "address_city",
+        "address_state",
+        "address_zip_code",
+        "address_zip_code4",
+        "site_directions",
+        "site_phone_nbr",
+        "site_email_address",
+        "rec1stop_url",
+        "usda_portal_url",
+        "site_time_zone",
+        "important_info",
+        "site_contact_notes",
+        "rentals_and_guides",
+        "passes",
+        "permit_information",
+        "restrictions",
+        "closest_towns",
+        "states_spanned",
+        "water_availability",
+        "restroom_availability",
+        "operated_by",
+        "season_description",
+        "directions",
+        "maximum_elevation",
+        "minimum_elevation",
+        "activity_type",
+        "activity_type_count",
+        "activity_types",
+        "activities_distance_from_site",
+        "service_type",
+        "services_distance_from_site",
+        "alerts_description",
+        "alerts_start_date",
+        "alerts_end_date",
+        "closure_reason",
+        "unit_closure_description",
+        "unit_closure_start_date",
+        "unit_closure_end_date",
+        "site_opening_start_date",
+        "site_opening_end_date",
+        "season_name",
+        "site_season_start_date",
+        "site_season_end_date",
+        "unit_type",
+        "aba_accessible",
+        "capacity_size_rating",
+        "min_nbr_people",
+        "max_nbr_people",
+        "driveway_doublewide",
+        "driveway_entry",
+        "driveway_grade",
+        "driveway_length",
+        "driveway_surface",
+        "max_nbr_vehicles",
+        "max_vehicle_length",
+        "unit_length",
+        "unit_width",
+        "picnic_table",
+        "fire_pit",
+        "tent_pad",
+        "www_reservable",
+        "unit_reserve_type",
+        "type_of_use",
+        "unit_access",
+        "shade",
+        "waterfront_unit",
+        "water_hookup",
+        "sewer_hookup",
+        "electricity_hookup",
+        "multiple_electricity_details",
+        "food_storage_locker",
+        "horse_hitching_post",
+        "horse_stall_corral",
+        "unit_amenities_notes",
+        "rate",
+        "rate_type_per_site",
+        "rate_type_per_unit",
+        "group_size",
+        "rate_per_time_frame",
+        "num_days",
+        "fee_sunday",
+        "fee_monday",
+        "fee_tuesday",
+        "fee_wednesday",
+        "fee_thursday",
+        "fee_friday",
+        "fee_saturday",
+        "fee_remarks",
+        "passes_accepted",
+        "lmtd_use_award_method",
+        "lmtd_use_award_type",
+        "latitude",
+        "longitude",
+        "stacked_recsite_count",
+        "last_update",
+        "globalid"
+      ],
+      "inferred_data_types": {
+        "X": "float",
+        "Y": "float",
+        "objectid": "string",
+        "site_cn": "string",
+        "root_cn": "string",
+        "parent_cn": "string",
+        "region": "string",
+        "security_id": "string",
+        "managing_org": "string",
+        "site_id": "string",
+        "site_name": "string",
+        "site_subtype": "string",
+        "development_status": "string",
+        "development_scale": "integer",
+        "poss_id": "string",
+        "nrrs_id": "string",
+        "total_capacity": "float",
+        "fee_charged": "boolean",
+        "fee_type": "string",
+        "recarea_name": "string",
+        "recarea_enable": "boolean",
+        "recarea_description": "string",
+        "recarea_status": "string",
+        "parent_recarea": "string",
+        "information_center": "string",
+        "current_conditions": "string",
+        "official_designation": "string",
+        "fee_description": "string",
+        "operational_hours": "string",
+        "open_season": "string",
+        "best_season": "string",
+        "busiest_season": "string",
+        "usage_level": "string",
+        "pack_in_out": "boolean",
+        "public_site_name": "string",
+        "alias_name": "string",
+        "alternative_name": "string",
+        "site_address": "boolean",
+        "mailing_address": "boolean",
+        "physical_address": "boolean",
+        "address_line1": "string",
+        "address_line2": "string",
+        "address_city": "string",
+        "address_state": "string",
+        "address_zip_code": "integer",
+        "address_zip_code4": "empty",
+        "site_directions": "string",
+        "site_phone_nbr": "integer",
+        "site_email_address": "string",
+        "rec1stop_url": "string",
+        "usda_portal_url": "string",
+        "site_time_zone": "string",
+        "important_info": "string",
+        "site_contact_notes": "string",
+        "rentals_and_guides": "string",
+        "passes": "string",
+        "permit_information": "string",
+        "restrictions": "string",
+        "closest_towns": "string",
+        "states_spanned": "string",
+        "water_availability": "string",
+        "restroom_availability": "string",
+        "operated_by": "string",
+        "season_description": "string",
+        "directions": "string",
+        "maximum_elevation": "string",
+        "minimum_elevation": "string",
+        "activity_type": "string",
+        "activity_type_count": "integer",
+        "activity_types": "string",
+        "activities_distance_from_site": "empty",
+        "service_type": "empty",
+        "services_distance_from_site": "empty",
+        "alerts_description": "string",
+        "alerts_start_date": "string",
+        "alerts_end_date": "string",
+        "closure_reason": "empty",
+        "unit_closure_description": "empty",
+        "unit_closure_start_date": "empty",
+        "unit_closure_end_date": "empty",
+        "site_opening_start_date": "string",
+        "site_opening_end_date": "string",
+        "season_name": "string",
+        "site_season_start_date": "string",
+        "site_season_end_date": "string",
+        "unit_type": "string",
+        "aba_accessible": "boolean",
+        "capacity_size_rating": "empty",
+        "min_nbr_people": "empty",
+        "max_nbr_people": "empty",
+        "driveway_doublewide": "boolean",
+        "driveway_entry": "empty",
+        "driveway_grade": "empty",
+        "driveway_length": "empty",
+        "driveway_surface": "empty",
+        "max_nbr_vehicles": "empty",
+        "max_vehicle_length": "empty",
+        "unit_length": "empty",
+        "unit_width": "empty",
+        "picnic_table": "boolean",
+        "fire_pit": "boolean",
+        "tent_pad": "boolean",
+        "www_reservable": "boolean",
+        "unit_reserve_type": "empty",
+        "type_of_use": "empty",
+        "unit_access": "empty",
+        "shade": "empty",
+        "waterfront_unit": "boolean",
+        "water_hookup": "boolean",
+        "sewer_hookup": "boolean",
+        "electricity_hookup": "empty",
+        "multiple_electricity_details": "empty",
+        "food_storage_locker": "boolean",
+        "horse_hitching_post": "boolean",
+        "horse_stall_corral": "boolean",
+        "unit_amenities_notes": "empty",
+        "rate": "empty",
+        "rate_type_per_site": "empty",
+        "rate_type_per_unit": "empty",
+        "group_size": "empty",
+        "rate_per_time_frame": "empty",
+        "num_days": "empty",
+        "fee_sunday": "empty",
+        "fee_monday": "empty",
+        "fee_tuesday": "empty",
+        "fee_wednesday": "empty",
+        "fee_thursday": "empty",
+        "fee_friday": "empty",
+        "fee_saturday": "empty",
+        "fee_remarks": "empty",
+        "passes_accepted": "empty",
+        "lmtd_use_award_method": "empty",
+        "lmtd_use_award_type": "empty",
+        "latitude": "float",
+        "longitude": "float",
+        "stacked_recsite_count": "integer",
+        "last_update": "string",
+        "globalid": "string"
+      },
+      "exact_duplicate_row_count": 0,
+      "exact_duplicate_group_count": 0,
+      "exact_duplicate_rows_involved": 0,
+      "single_column_candidate_keys": [
+        "objectid",
+        "site_cn",
+        "globalid"
+      ],
+      "special_analysis": {
+        "site_subtype_frequencies": [
+          {
+            "value": "CAMPING AREA",
+            "count": 10960
+          },
+          {
+            "value": "TRAILHEAD",
+            "count": 7360
+          },
+          {
+            "value": "CAMPGROUND",
+            "count": 4198
+          },
+          {
+            "value": "BOATING SITE",
+            "count": 1375
+          },
+          {
+            "value": "PICNIC SITE",
+            "count": 1212
+          },
+          {
+            "value": "DAY USE AREA",
+            "count": 1030
+          },
+          {
+            "value": "LOOKOUT/CABIN",
+            "count": 813
+          },
+          {
+            "value": "INTERPRETIVE SITE",
+            "count": 704
+          },
+          {
+            "value": "OBSERVATION SITE",
+            "count": 633
+          },
+          {
+            "value": "FISHING SITE",
+            "count": 565
+          },
+          {
+            "value": "GROUP CAMPGROUND",
+            "count": 431
+          },
+          {
+            "value": "CAMP UNIT",
+            "count": 321
+          },
+          {
+            "value": "SNOWPARK",
+            "count": 316
+          },
+          {
+            "value": "RECREATION RESIDENCE",
+            "count": 281
+          },
+          {
+            "value": "OHV STAGING AREA",
+            "count": 182
+          },
+          {
+            "value": "HORSE CAMP",
+            "count": 181
+          },
+          {
+            "value": "INFO SITE/FEE STATION",
+            "count": 169
+          },
+          {
+            "value": "HOTEL, LODGE, RESORT",
+            "count": 166
+          },
+          {
+            "value": "SWIMMING SITE",
+            "count": 130
+          },
+          {
+            "value": "TARGET RANGE",
+            "count": 127
+          },
+          {
+            "value": "GROUP PICNIC SITE",
+            "count": 120
+          },
+          {
+            "value": "CAMP UNIT - TENT",
+            "count": 102
+          },
+          {
+            "value": "INTERPRETIVE VISITOR CENTER (MINOR)",
+            "count": 97
+          },
+          {
+            "value": "CLIMBING AREA",
+            "count": 91
+          },
+          {
+            "value": "ORGANIZATION SITE",
+            "count": 90
+          },
+          {
+            "value": "SKI AREA ALPINE",
+            "count": 71
+          },
+          {
+            "value": "DOCUMENTARY SITE",
+            "count": 61
+          },
+          {
+            "value": "WILDLIFE VIEWING SITE",
+            "count": 61
+          },
+          {
+            "value": "INTERPRETIVE SITE (ADMIN)",
+            "count": 45
+          },
+          {
+            "value": "OTHER RECREATION CONCESSION SITE",
+            "count": 44
+          },
+          {
+            "value": "CAMP UNIT - TRAILER/RV",
+            "count": 39
+          },
+          {
+            "value": "DUMP STATION",
+            "count": 32
+          },
+          {
+            "value": "SNOWPLAY AREA",
+            "count": 31
+          },
+          {
+            "value": "INTERPRETIVE VISITOR CENTER (MAJOR)",
+            "count": 25
+          },
+          {
+            "value": "SKI AREA NORDIC",
+            "count": 23
+          },
+          {
+            "value": "SPECIALIZED SPORT SITE",
+            "count": 20
+          },
+          {
+            "value": "LOOP",
+            "count": 8
+          }
+        ],
+        "selected_subtype_counts": {
+          "CAMPGROUND": 4198,
+          "GROUP CAMPGROUND": 431,
+          "HORSE CAMP": 181
+        },
+        "selected_subtype_combined_count": 4810,
+        "selected_key_uniqueness": {
+          "site_cn": {
+            "non_missing_key_rows": 32114,
+            "missing_key_rows": 0,
+            "distinct_non_missing_count": 32114,
+            "duplicate_non_missing_rows": 0,
+            "is_unique_among_non_missing": true,
+            "is_complete": true,
+            "is_candidate_key": true
+          },
+          "globalid": {
+            "non_missing_key_rows": 32114,
+            "missing_key_rows": 0,
+            "distinct_non_missing_count": 32114,
+            "duplicate_non_missing_rows": 0,
+            "is_unique_among_non_missing": true,
+            "is_complete": true,
+            "is_candidate_key": true
+          },
+          "objectid": {
+            "non_missing_key_rows": 32114,
+            "missing_key_rows": 0,
+            "distinct_non_missing_count": 32114,
+            "duplicate_non_missing_rows": 0,
+            "is_unique_among_non_missing": true,
+            "is_complete": true,
+            "is_candidate_key": true
+          },
+          "site_id": {
+            "non_missing_key_rows": 32114,
+            "missing_key_rows": 0,
+            "distinct_non_missing_count": 29972,
+            "duplicate_non_missing_rows": 2142,
+            "is_unique_among_non_missing": false,
+            "is_complete": true,
+            "is_candidate_key": false
+          }
+        },
+        "selected_column_missingness": {
+          "latitude": {
+            "missing_count": 0,
+            "missing_percentage": 0.0
+          },
+          "longitude": {
+            "missing_count": 0,
+            "missing_percentage": 0.0
+          },
+          "fee_charged": {
+            "missing_count": 245,
+            "missing_percentage": 0.762907
+          },
+          "water_availability": {
+            "missing_count": 20414,
+            "missing_percentage": 63.567292
+          },
+          "restroom_availability": {
+            "missing_count": 20345,
+            "missing_percentage": 63.352432
+          },
+          "directions": {
+            "missing_count": 20970,
+            "missing_percentage": 65.298624
+          },
+          "usda_portal_url": {
+            "missing_count": 21765,
+            "missing_percentage": 67.774179
+          },
+          "total_capacity": {
+            "missing_count": 7,
+            "missing_percentage": 0.021797
+          }
+        },
+        "duplicated_site_id_distinct_value_count": 1865,
+        "duplicated_site_id_excess_row_count": 2142
+      }
+    },
+    "Recreation_Area_Activities.csv": {
+      "relative_path": "data/raw/Recreation_Area_Activities.csv",
+      "encoding": "UTF-8 with optional BOM",
+      "file_size_bytes": 59831459,
+      "row_count": 52482,
+      "column_count": 25,
+      "column_names": [
+        "X",
+        "Y",
+        "OBJECTID",
+        "RECAREANAME",
+        "LONGITUDE",
+        "LATITUDE",
+        "RECAREAURL",
+        "OPEN_SEASON_START",
+        "OPEN_SEASON_END",
+        "FORESTNAME",
+        "RECAREAID",
+        "MARKERTYPE",
+        "MARKERACTIVITY",
+        "MARKERACTIVITYGROUP",
+        "RECAREADESCRIPTION",
+        "ACTIVITYDESCRIPTION",
+        "PARENTACTIVITYNAME",
+        "ACTIVITYNAME",
+        "ACTIVITYID",
+        "PARENTACTIVITYID",
+        "SPOTLIGHTDISPLAY",
+        "ATTRACTIONDISPLAY",
+        "ACCESSIBILITY",
+        "OPENSTATUS",
+        "SHAPE"
+      ],
+      "inferred_data_types": {
+        "X": "float",
+        "Y": "float",
+        "OBJECTID": "string",
+        "RECAREANAME": "string",
+        "LONGITUDE": "float",
+        "LATITUDE": "float",
+        "RECAREAURL": "string",
+        "OPEN_SEASON_START": "string",
+        "OPEN_SEASON_END": "string",
+        "FORESTNAME": "string",
+        "RECAREAID": "string",
+        "MARKERTYPE": "string",
+        "MARKERACTIVITY": "string",
+        "MARKERACTIVITYGROUP": "string",
+        "RECAREADESCRIPTION": "string",
+        "ACTIVITYDESCRIPTION": "string",
+        "PARENTACTIVITYNAME": "string",
+        "ACTIVITYNAME": "string",
+        "ACTIVITYID": "string",
+        "PARENTACTIVITYID": "string",
+        "SPOTLIGHTDISPLAY": "boolean",
+        "ATTRACTIONDISPLAY": "boolean",
+        "ACCESSIBILITY": "string",
+        "OPENSTATUS": "string",
+        "SHAPE": "empty"
+      },
+      "exact_duplicate_row_count": 0,
+      "exact_duplicate_group_count": 0,
+      "exact_duplicate_rows_involved": 0,
+      "single_column_candidate_keys": [
+        "OBJECTID"
+      ],
+      "special_analysis": {
+        "unique_RECAREAID_count": 14469,
+        "unique_ACTIVITYID_count": 79,
+        "rows_missing_either_identifier": 769,
+        "duplicate_RECAREAID_ACTIVITYID_pair_count": 0,
+        "activity_name_to_multiple_ids_count": 2,
+        "activity_id_to_multiple_names_count": 0,
+        "recreation_area_attribute_conflicts": {
+          "X": {
+            "conflicting_recarea_count": 0,
+            "examples": []
+          },
+          "Y": {
+            "conflicting_recarea_count": 0,
+            "examples": []
+          },
+          "RECAREANAME": {
+            "conflicting_recarea_count": 0,
+            "examples": []
+          },
+          "LONGITUDE": {
+            "conflicting_recarea_count": 0,
+            "examples": []
+          },
+          "LATITUDE": {
+            "conflicting_recarea_count": 0,
+            "examples": []
+          },
+          "RECAREAURL": {
+            "conflicting_recarea_count": 0,
+            "examples": []
+          },
+          "OPEN_SEASON_START": {
+            "conflicting_recarea_count": 0,
+            "examples": []
+          },
+          "OPEN_SEASON_END": {
+            "conflicting_recarea_count": 0,
+            "examples": []
+          },
+          "FORESTNAME": {
+            "conflicting_recarea_count": 0,
+            "examples": []
+          },
+          "MARKERTYPE": {
+            "conflicting_recarea_count": 0,
+            "examples": []
+          },
+          "MARKERACTIVITY": {
+            "conflicting_recarea_count": 0,
+            "examples": []
+          },
+          "MARKERACTIVITYGROUP": {
+            "conflicting_recarea_count": 0,
+            "examples": []
+          },
+          "RECAREADESCRIPTION": {
+            "conflicting_recarea_count": 0,
+            "examples": []
+          },
+          "SPOTLIGHTDISPLAY": {
+            "conflicting_recarea_count": 0,
+            "examples": []
+          },
+          "ATTRACTIONDISPLAY": {
+            "conflicting_recarea_count": 0,
+            "examples": []
+          },
+          "ACCESSIBILITY": {
+            "conflicting_recarea_count": 0,
+            "examples": []
+          },
+          "OPENSTATUS": {
+            "conflicting_recarea_count": 0,
+            "examples": []
+          },
+          "SHAPE": {
+            "conflicting_recarea_count": 0,
+            "examples": []
+          }
+        }
+      }
+    },
+    "national_parks_raw.csv": {
+      "relative_path": "data/raw/national_parks_raw.csv",
+      "encoding": "UTF-8 with optional BOM",
+      "file_size_bytes": 31986,
+      "row_count": 63,
+      "column_count": 8,
+      "column_names": [
+        "",
+        "Name",
+        "Image",
+        "Location",
+        "Date established as park[7][12]",
+        "Area (2021)[13]",
+        "Recreation visitors (2021)[11]",
+        "Description"
+      ],
+      "inferred_data_types": {
+        "": "string",
+        "Name": "string",
+        "Image": "empty",
+        "Location": "string",
+        "Date established as park[7][12]": "string",
+        "Area (2021)[13]": "string",
+        "Recreation visitors (2021)[11]": "integer",
+        "Description": "string"
+      },
+      "exact_duplicate_row_count": 0,
+      "exact_duplicate_group_count": 0,
+      "exact_duplicate_rows_involved": 0,
+      "single_column_candidate_keys": [
+        "",
+        "Name",
+        "Location",
+        "Area (2021)[13]",
+        "Recreation visitors (2021)[11]",
+        "Description"
+      ],
+      "special_analysis": {
+        "empty_columns": [
+          "Image"
+        ],
+        "names_with_stars_count": 6,
+        "names_with_citations_count": 0,
+        "names_with_unusual_whitespace_count": 1,
+        "names_with_any_flag_count": 6
+      }
+    }
+  }
+}

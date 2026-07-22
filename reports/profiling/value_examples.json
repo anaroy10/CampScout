@@ -1,0 +1,1354 @@
+{
+  "Recreation_Sites_INFRA.csv": {
+    "column_samples": {
+      "X": [
+        "-120.3867007",
+        "-113.65608833",
+        "-120.0564",
+        "-88.68305556",
+        "-91.1358522199999"
+      ],
+      "Y": [
+        "44.4992971300001",
+        "47.4521033300001",
+        "39.5658",
+        "37.5091666700001",
+        "47.6441442300001"
+      ],
+      "objectid": [
+        "1279838",
+        "1279839",
+        "1279840",
+        "1279841",
+        "1279842"
+      ],
+      "site_cn": [
+        "5200.004991",
+        "4943412010602",
+        "5190.003341",
+        "13244010365",
+        "5043.007601"
+      ],
+      "root_cn": [
+        "5200.004991",
+        "4943412010602",
+        "5190.003341",
+        "13244010365",
+        "5043.007601"
+      ],
+      "parent_cn": [
+        "6745671010602",
+        "6745665010602",
+        "6770663010602",
+        "5248.002601",
+        "6745667010602"
+      ],
+      "region": [
+        "06",
+        "01",
+        "04",
+        "09",
+        "02"
+      ],
+      "security_id": [
+        "0607",
+        "0110",
+        "0417",
+        "0908",
+        "0909"
+      ],
+      "managing_org": [
+        "060701",
+        "011001",
+        "041701",
+        "090804",
+        "090907"
+      ],
+      "site_id": [
+        "13476",
+        "170102110106-106",
+        "8123",
+        "4831",
+        "70015"
+      ],
+      "site_name": [
+        "OCHOCO DIVIDE",
+        "BARBER CREEK PLATATION -1",
+        "DOG VALLEY CAMPGROUND",
+        "JACKSON FALLS",
+        "HOGBACK LAKE RUSTIC CAMPGROUND"
+      ],
+      "site_subtype": [
+        "CAMPGROUND",
+        "INTERPRETIVE SITE",
+        "CAMPING AREA",
+        "CLIMBING AREA",
+        "GROUP PICNIC SITE"
+      ],
+      "development_status": [
+        "EXISTING"
+      ],
+      "development_scale": [
+        "3",
+        "1",
+        "2",
+        "5",
+        "0"
+      ],
+      "poss_id": [
+        "200617098",
+        "200603011",
+        "200805004",
+        "200804032",
+        "200401002"
+      ],
+      "nrrs_id": [
+        "10159202",
+        "250040",
+        "118991",
+        "231916",
+        "231932"
+      ],
+      "total_capacity": [
+        "185",
+        "0",
+        "40",
+        "70",
+        "15"
+      ],
+      "fee_charged": [
+        "Y",
+        "N"
+      ],
+      "fee_type": [
+        "EXPANDED AMENITY FEE",
+        "STANDARD AMENITY FEE",
+        "SPECIAL RECREATION PERMIT"
+      ],
+      "recarea_name": [
+        "Ochoco Divide",
+        "Barber Creek Platation -1",
+        "Dog Valley Campground",
+        "Jackson Falls Climbing Area",
+        "HOGBACK LAKE RUSTIC CAMPGROUND"
+      ],
+      "recarea_enable": [
+        "Y",
+        "N",
+        "y"
+      ],
+      "recarea_description": [
+        "Ochoco Divide Campground is a convenient place to camp while traveling across scenic State Highway 26 by bicycle or car. Resting at the top of the Ochoco Divide in a ponderosa pine forest and at an elevation of 4,700 ft., the campground is easy to access yet gives the high altitude forest feel. Nearby recreational activities include birding, hiking, hunting, mountain biking, nature viewing and road biking. Ochoco Divide Group Site is located within Ochoco Divide Campground. View a map of Ochoco Divide Campground.",
+        "BARBER CREEK PLATATION -1 (Interpretive Site)",
+        "DOG VALLEY CAMPGROUND (Camping Area)",
+        "The bluffs and rock faces found at Jackson Falls offer excellent technical climbing surrounded by a beautifully scenic area of the Shawnee National Forest. Considered part of the general forest area the Jackson Falls has a vault toilet. Camping is free, but limited to a maximum of 14-days continuous stay.\n\nFrom the trailhead a short trail leads to the top of Jackson Falls. High bluffs are in the area, visitors should be cautious and aware of their surroundings.",
+        "The Hogback Lake Area has a rustic campground with 3 sites, a 5 mile trail system passing 6 lakes with several different loops, and 5 backcountry campsites along the trail.  There is also a boat launch and an accessible fishing pier.  There is no garbage pick up at Hogback Lake Rustic Campground.  Plan to pack out all your garbage, including fish remains from cleaning fish."
+      ],
+      "recarea_status": [
+        "None",
+        "OPEN",
+        "NONE",
+        "CLOSED",
+        "TEMPORARILY CLOSED"
+      ],
+      "parent_recarea": [
+        "LOOKOUT MOUNTAIN RD",
+        "SWAN LAKE RD",
+        "CARSON RD",
+        "Hidden Springs RD",
+        "HIDDEN SPRINGS RD"
+      ],
+      "information_center": [
+        "Ochoco National Forest3160 NE Third StreetPrineville, Oregon 97754(541) 416-6500",
+        "For campsite or picnic shelter availability, contact Lake Glendale Concessionaire, Gary and Andrea Dahmer at 618-658-0607. For general information: Hidden Springs Ranger District (618) 658-2111\nFor campsite availability, contact Lake Glendale Concessionaire, Gary and Andrea Dahmer at 618-658-0607. For general information: Hidden Springs Ranger District (618) 658-2111\n",
+        "Hidden Springs Ranger District (618) 658-2111",
+        "Black Range Ranger District (575) 894-6677",
+        "Siskiyou Mountains Ranger District"
+      ],
+      "current_conditions": [
+        "Potable Water is available during open season operation.",
+        "Th parking lot can accommodate approximately 50 vehicles.",
+        "Cleared July 2020. Forest trails are not maintained and typically not accessible from late fall through late spring due to snow. Please call the local Ranger District Office for up-to-date information.",
+        "No firewood sales and no dump station.",
+        "Check out our Campground Status for up-to-date information."
+      ],
+      "official_designation": [
+        "Trailhead",
+        "Snoqualmie District Ranger",
+        "Vedauwoo Recreation Area"
+      ],
+      "fee_description": [
+        "Overnight Use:\nSingle Site: $25 per night\nAdditional Vehicle Fee: $10 per night\nGroup site: \nWeekdays $75\nWeekends $125\nDay Use:\n$7 per vehicle per day",
+        "No fees are required for this site",
+        "For shelter reservations, contact Lake Glendale Concessionaire, Gary and Andrea Dahmer at 618-658-0607.",
+        "Fee required to access the boat ramp from early April to late October. For all other months, day use is free of charge.",
+        "Day Use:\n$5 per vehicle per day\n$30 per annual"
+      ],
+      "operational_hours": [
+        "Open 24 hours/day",
+        "Quiet hours are 10:00 p.m. until 6:00 a.m.",
+        "All year, 6am-10pm",
+        "all year",
+        "Parking is available overnight; occupancy and use at the trailhead is dawn to dusk."
+      ],
+      "open_season": [
+        "Year-round",
+        "44687",
+        "44743",
+        "yea- round",
+        "46143"
+      ],
+      "best_season": [
+        "Spring and fall",
+        "Spring to fall",
+        "Summer",
+        "Summer/Fall",
+        "Spring & Fall"
+      ],
+      "busiest_season": [
+        "Spring and fall",
+        "spring through fall",
+        "Spring to fall",
+        "Summer",
+        "Summer and fall"
+      ],
+      "usage_level": [
+        "LIGHT",
+        "Moderate",
+        "Heavy",
+        "Light",
+        "MODERATE"
+      ],
+      "pack_in_out": [
+        "N",
+        "Y"
+      ],
+      "public_site_name": [
+        "Ochoco Divide Campground",
+        "Dog Valley Campground",
+        "Jackson Falls",
+        "Hogback Lake Rustic Campground",
+        "Goose Bay Picnic Area- Lake Glendale"
+      ],
+      "alias_name": [
+        "Posy Lake Campground",
+        "Almanor North and South",
+        "Baja (Specialized Sport Site)",
+        "Miller Dam Perkinstown Boat Ramp",
+        "Hercules"
+      ],
+      "alternative_name": [
+        "Cascade Campground",
+        "Thistledown Campground",
+        "Bay View",
+        "Luna Lake Campground"
+      ],
+      "site_address": [
+        "N",
+        "Y"
+      ],
+      "mailing_address": [
+        "N",
+        "Y"
+      ],
+      "physical_address": [
+        "N"
+      ],
+      "address_line1": [
+        "25982 State Highway 17",
+        "109 Krenning Road",
+        "16706 FDR 128",
+        "23440 FDR 250",
+        "708 Main St"
+      ],
+      "address_line2": [
+        "Inside Stony Fork Campground",
+        "256.6B FDR 250",
+        "Forest Service Road 157"
+      ],
+      "address_city": [
+        "Antonito",
+        "Wytheville",
+        "MAESER",
+        "Wall",
+        "Pineville"
+      ],
+      "address_state": [
+        "CO",
+        "VA",
+        "UT",
+        "SD",
+        "LA"
+      ],
+      "address_zip_code": [
+        "81120",
+        "24382",
+        "84078",
+        "57790",
+        "71360"
+      ],
+      "address_zip_code4": [],
+      "site_directions": [
+        "From Douglas, take WY 94 17 miles south to County Road 94. Go 11 miles south, then 11 miles south on County Road 4. 15 miles southwest on Forest Route 653, and 3 miles east on FR 633.",
+        "From Saratoga: Travel south on Hwy 130 for 8 miles to the Hwy 130/230 junction. Turn left (east) on Hwy 130 and drive 20 miles to to the entrance road to the cabin.  Winter access requires parking at the 'chains end' gate' one mile west of the cabin and using a snowmachine, skis, or snowshoes to reach the cabin.",
+        "Directions from Steamboat Springs: Travel 2 miles northeast of Steamboat Springs on Routt County Road 36 (Strawberry Park Road), then 13 miles northeast on Routt County Road 38 (Buffalo Pass Road) to Buffalo Pass. Go 4 miles south on FDR 310 to Fish Creek Reservoir and Granite Campground.",
+        "From Pueblo, go 25 miles south on interstate 25 to exit 74. Go west 18 miles on state Hwy 165. Turn into the north entrance at Lake Isabel, go about .1 mile and look for the parking area.",
+        "From Lake Isabel, go 4 miles north on State Highway 165 then turn right (going East) onto Forest Service Road 382. Travel about 2 miles until the road dead ends into Davenport Campground."
+      ],
+      "site_phone_nbr": [
+        "9285350181",
+        "3184737160",
+        "7609201758",
+        "7068964137",
+        "2087633624"
+      ],
+      "site_email_address": [
+        "www.fs.usda.gove/r05/eldorado/recreation/opportunities/water-activities",
+        "https://www.mtbaker.us/",
+        "brasstownbald@gfaia.org",
+        "www.fs.fed.us/r3/prescott",
+        "frgc.org"
+      ],
+      "rec1stop_url": [
+        "https://www.recreation.gov/camping/campgrounds/232864",
+        "https://www.recreation.gov/camping/campgrounds/232798",
+        "https://www.recreation.gov/camping/campgrounds/232800",
+        "https://www.recreation.gov/camping/campgrounds/232196",
+        "https://www.recreation.gov/camping/campgrounds/10165155"
+      ],
+      "usda_portal_url": [
+        "https://www.fs.usda.gov/recarea/ochoco/recarea/?recid=38724",
+        "https://www.fs.usda.gov/recarea/superior/recreation/recarea/?recid=40301",
+        "https://www.fs.usda.gov/recarea/okawen/recreation/recarea/?recid=58951&actid=51",
+        "https://fs.usda.gov/r03/gila/recreation/lookout-mountain-cdnst-trailhead",
+        "https://www.fs.usda.gov/recarea/rogue-siskiyou/recarea/?recid=70154"
+      ],
+      "site_time_zone": [
+        "(GMT-07:00) Mountain Time",
+        "(GMT-08:00) Pacific Time",
+        "(GMT-05:00) Eastern Time",
+        "(GMT-06:00) Central Time",
+        "(GMT-07:00) Arizona"
+      ],
+      "important_info": [
+        "AREA AMENITIES:\nCamping trailer: dump station\nPicnic tables: picnic area has large shelter and grills\nTent camping\nParking\nToilets: flush toilets & showers\nFee charged for some activities: beach and camping\nAccessible: campsites, shower house, picnic areas\nBoat ramp: electric motors only\nDrinking water: plus showers in campground",
+        "Parking:\nLarge gravel parking area.\n\n\nGeneral Notes:\nOvernight parking is allowed along the side of Forest Service Roads, however do not block road or gates or cause resource damage.\n\nCamping Regulations in General Forest Areas:  \nPrimitive camping is allowed ? mile outside developed areas within Shawnee National Forest. There is no fee for primitive camping and it?s allowed any time of year. Don?t trespass on private land, and do not cut down live trees, shrubs or other vegetation. Camp and wash at least 150 feet from any water source. Pack out your garbage and make sure campfires are completely out.\n\nCampers may camp up to 14-days in one location. Camping is not allowed in the 80 designated natural areas or within 150 feet of lakes and streams or near trails.",
+        "Parking available at the main Bell Smith Springs Trailhead and Hunting Branch Trailhead. Picnicking available nearby at Hunting Branch Picnic Site.  Camping available nearby at Redbud Campground.",
+        "First come, first served.",
+        "Accessible vault toilets\nHand pumps (water available thru mid-Sept)\nPicnic tables and fire rings at each site (one large fire pit located in the middle of group site)\nBear resistant bin available for food storage to comply with food storage order\nNo garbage service...pack it in pack it out"
+      ],
+      "site_contact_notes": [
+        "Open from May until October.",
+        "Open from June until October. No vehicles over 50\" in width.  Wyoming State OHV sticker required on vehicles.",
+        "Price Creek Campground sits at 7,873 feet in elevation and is surrounded by Lodgepole pines providing lots of shade and natural beauty. A large variety of wildlife, including deer, elk, moose and even an occasional black bear can be seen passing through the area.",
+        "Hermosa Creek Trail #514 begins at the parking lot and follows the creek approximately 25 miles uphill through the Hermosa Special Management Area to Upper Hermosa Trailhead. The trail is singletrack with some steep dropoffs. This multiple-use trail is very popular for mountain bikers, horseback riders, hikers, fishermen, and singletrack motorized users.",
+        "Pole Creek Cross Country Ski Area is subject to area-wide provision S5 which closes the area to motor vehicles, including over-snow vehicles, from Dec 1st ? May 1st, unless revoked earlier due to lack of snow."
+      ],
+      "rentals_and_guides": [
+        "N/A",
+        "Rentals and other services available; some services available only to Marina Members.",
+        "Cabin can be reserved by calling Toll Free 1-877-444-6777 (International 518-885-3639 or TDD 877-833-6777) or on-line.",
+        "McPhee Marina\nBoats from local vendors",
+        "Guided tours may be available. A Special Use Permit is required to operate commercially on the Tonto National Forest. Contact your local Ranger District Office for more information."
+      ],
+      "passes": [
+        "Interagency Senior/Access Recreation Passes provide a 50% discount to Single Campsites ONLY. *The discount applies only to the fee for the campsite physically occupied by the pass holder, not to any additional fee or campsite(s) occupied by members of the pass holder's party.* https://store.usgs.gov/recreational-passes Please be prepared to pay with CASH or CHECK. *Sites may be reservable and reservation fees apply.*",
+        "Camping is free, but limited to 14 continuous day stay. No fee for boat launch.",
+        "Recreation Passes honored: Digital Day Use Pass, Northwest Forest Pass, Interagency Recreation Passes.",
+        "Chattahoochee-Oconee National Forests: $25/annual. https://www.fs.usda.gov/detail/conf/passes-permits/?cid=fseprd529794 Interagency Recreation Passes are Honored. store.usgs.gov/recreational-passes Please be prepared to pay with CASH or CHECK.",
+        "a Cherokee National Forest Pass for $30 for the year. Contact the Watauga Ranger District for more information at 423-735-1500 The day-use permit can also be purchased online https://www.recreation.gov/sitepass/74437 or see information in the Passes section"
+      ],
+      "permit_information": [
+        "Permits are required for organized groups entering the wilderness area.",
+        "Permits are required for commercial or organized uses",
+        "First-come, first-served",
+        "No permits needed.",
+        "Wilderness permit station at trailhead"
+      ],
+      "restrictions": [
+        "There is a 14 day stay limit on all National Grassland and US Forest Service land including but not limited to campgrounds and other developed facilities.",
+        "Picnic areas are open 6am ? 10pm\nBeach Open: Monday - Saturday 11am to 5:30pm and Sunday 12pm to 6pm\nSwimming allowed at beach only.\nPets must be leashed, and are not allowed on the beach or in the designated swim area.\nPack It In, Pack It Out, along trails.\nStay on the designated trails.\nCamp only at designated sites.\nA complete list of site regulations is posted on bulletin boards and at fee stations.\nFishing Regulations: \n2 pole & line fishing only\nLg./Smallmouth bass or spotted bass -15? min. Bass daily limit = 6 \nChannel Catfish ? Daily limit = 6 \nElectric motors only",
+        "Fishing regulations are set by IL. Dept of Natural Resources. A fishing license is required and can be obtained at local vendors or online from the IL. Dept. of Natural Resources",
+        "Electric motors only",
+        "Please do not camp in trailhead parking areas. All stock feed brought onto the Gila National Forest must be certified weed free."
+      ],
+      "closest_towns": [
+        "Prineville, Oregon",
+        "Isabella, MN",
+        "Eddyville, IL 62928",
+        "Marion, IL 62959",
+        "Cashmere, Washington"
+      ],
+      "states_spanned": [
+        "New Mexico",
+        "MT",
+        "WA",
+        "Indiana",
+        "CA"
+      ],
+      "water_availability": [
+        "Yes, drinking water is available",
+        "No drinking water is available",
+        "Yes",
+        "No",
+        "None"
+      ],
+      "restroom_availability": [
+        "Vault toilet(s)",
+        "Yes",
+        "No",
+        "Single Vault Toilet",
+        "Flush toilet(s)"
+      ],
+      "operated_by": [
+        "Concessionaire",
+        "US Forest Service",
+        "USFS",
+        "U.S. Forest Service",
+        "Private-other"
+      ],
+      "season_description": [
+        "Year-round",
+        "May - September",
+        "2026 Season Dates: Open 5/8/2026 - Closes 9/27/2026\n",
+        "All Year",
+        "N/A"
+      ],
+      "directions": [
+        "From Prineville, Oregon: Head east on Highway 26 for approximately 30 miles. Ochoco Divide Campground will be on your right, just past Ochoco Divide Sno-Park and just before the summit.",
+        "From Tofte on MN 61:  At Temperance River State Park, just south of the river, take FR 343 (Temperance River Rd) inland.  Drive 4.5 miles to a T intersection with FR 166 (The '600' Road).  Turn left on FR 166 and drive 5 miles to Co 7.  Turn right on Co 7.  Drive approx. 5 miles to FR 172 (Wanless Rd).  Turn left.  Hogback Lake is a very short distance from Co 7 on FR 172 on the left.  Access to the hiking trails and backcountry sites is also located off Co 7 before reaching FR 172 at a sign reading 'Steer Lake'.\nAlternatively, get onto Co 7 at MN 1 in Finland.",
+        "From Harrisburg: Take Highway 145 south 26.5 miles. Turn left into the recreation area off of Hwy 145. \n\nFrom Vienna: (intersection I-24 and Hwy 146): Take Hwy 146 east 11 miles to Hwy 145. Go north on Hwy 145 for 2.2 miles and turn right into the recreation area.\n\nFrom Metropolis: (intersection I-24 and Hwy 145):  Take Highway 145 north 18 miles and turn right into the recreation area.",
+        "From Marion:  Go east on State Route 13 for 5 miles to Hwy 166, then south (right) onto Hwy 166 for 8.5 miles to Creal Springs Road. Turn south (right) onto Creal Springs Rd., go 3 miles to Recreation Road (#870 on this map). Turn right (west) onto Recreation Road for 2 miles to the Lake of Egypt Camping.\n\nFrom Paducah, KY:  Travel west on Interstate 24 (I-24) into Illinois for 35 miles to Exit 14. Take Exit 14 and turn right onto Hwy 45 north. Go 5.5 miles north to Tunnel Hill Road, then turn northwest (left) onto Tunnel Hill Rd. for about 1 mile to Creal Springs Rd. Turn right onto Creal Springs Rd. and go 4 miles to Recreation Road (#870 on this map). Turn left(west) onto Recreation Road for 2 miles to the Lake of Egypt Camping Areas.",
+        "From Cashmere, take the Mission Creek Road south to the edge of pavement. Turn right onto Sand Creek Road #7104 for one mile. The trail begins at the Red Hill Trailhead located on Sand Creek Road #7104. The trail ends at the Devils Gulch ORV Trail #1220. The trail ends at the junction of the Tronson Ridge ORV Trail #1204."
+      ],
+      "maximum_elevation": [
+        "8,418",
+        "7,279",
+        "6,160",
+        "6,398",
+        "3900"
+      ],
+      "minimum_elevation": [
+        "5,200 feet",
+        "3,901 feet",
+        " feet",
+        "500 feet",
+        "1,000 feet"
+      ],
+      "activity_type": [
+        "See ACTIVITY_TYPES field for a list.",
+        "HIKING",
+        "BOATING",
+        "CROSS-COUNTRY SKIING, SNOWSHOEING",
+        "VIEWING SCENERY"
+      ],
+      "activity_type_count": [
+        "0",
+        "8",
+        "4",
+        "5",
+        "1"
+      ],
+      "activity_types": [
+        "BOATING | BOATING, KAYAKING | CAMPING, TENT | CAMPING, TRAILER | FISHING | HIKING | MOUNTAIN BIKE | PICNICKING",
+        "BOATING | CAMPING, TENT | FISHING | HUNTING",
+        "CAMPING, TRAILER | HIKING | NATURE STUDY | PICNICKING | VIEWING SCENERY",
+        "HIKING",
+        "HIKING | MOUNTAIN/TRAIL BICYCLING | SPECIAL LANDCRAFT (OHVS)"
+      ],
+      "activities_distance_from_site": [],
+      "service_type": [],
+      "services_distance_from_site": [],
+      "alerts_description": [
+        "Winter dogs on leash in the parking lot and through the campground",
+        "This campground is a first come first serve site and there is a self registration station at the entrance of the campground. During the summer, the site receives heavy use on the weekends and holidays. The maximum number of people per site is 10.",
+        "6:00 am to 10:00 pm",
+        "Food storage required March 01-Dec 01",
+        "Food storage required March 01-Dec 01."
+      ],
+      "alerts_start_date": [
+        "2011/11/01 00:00:00+00"
+      ],
+      "alerts_end_date": [
+        "2012/04/01 00:00:00+00"
+      ],
+      "closure_reason": [],
+      "unit_closure_description": [],
+      "unit_closure_start_date": [],
+      "unit_closure_end_date": [],
+      "site_opening_start_date": [
+        "2020/01/01 00:00:00+00",
+        "2025/05/01 00:00:00+00",
+        "2011/11/01 00:00:00+00",
+        "2012/06/20 00:00:00+00",
+        "2026/05/07 00:00:00+00"
+      ],
+      "site_opening_end_date": [
+        "2030/12/31 00:00:00+00",
+        "2025/10/13 00:00:00+00",
+        "2012/10/31 00:00:00+00",
+        "2012/09/30 00:00:00+00",
+        "2026/09/07 00:00:00+00"
+      ],
+      "season_name": [
+        "NONP",
+        "PEAK",
+        "WALK"
+      ],
+      "site_season_start_date": [
+        "2020/10/02 00:00:00+00",
+        "2012/04/02 00:00:00+00",
+        "2020/01/01 00:00:00+00",
+        "2020/05/23 00:00:00+00",
+        "2020/05/01 00:00:00+00"
+      ],
+      "site_season_end_date": [
+        "2021/05/19 00:00:00+00",
+        "2012/10/31 00:00:00+00",
+        "2020/12/31 00:00:00+00",
+        "2020/11/27 00:00:00+00",
+        "2020/11/30 00:00:00+00"
+      ],
+      "unit_type": [
+        "TENT ONLY NON ELECTRIC"
+      ],
+      "aba_accessible": [
+        "N"
+      ],
+      "capacity_size_rating": [],
+      "min_nbr_people": [],
+      "max_nbr_people": [],
+      "driveway_doublewide": [
+        "N"
+      ],
+      "driveway_entry": [],
+      "driveway_grade": [],
+      "driveway_length": [],
+      "driveway_surface": [],
+      "max_nbr_vehicles": [],
+      "max_vehicle_length": [],
+      "unit_length": [],
+      "unit_width": [],
+      "picnic_table": [
+        "N"
+      ],
+      "fire_pit": [
+        "N"
+      ],
+      "tent_pad": [
+        "N"
+      ],
+      "www_reservable": [
+        "N"
+      ],
+      "unit_reserve_type": [],
+      "type_of_use": [],
+      "unit_access": [],
+      "shade": [],
+      "waterfront_unit": [
+        "N"
+      ],
+      "water_hookup": [
+        "N"
+      ],
+      "sewer_hookup": [
+        "N"
+      ],
+      "electricity_hookup": [],
+      "multiple_electricity_details": [],
+      "food_storage_locker": [
+        "N"
+      ],
+      "horse_hitching_post": [
+        "N"
+      ],
+      "horse_stall_corral": [
+        "N"
+      ],
+      "unit_amenities_notes": [],
+      "rate": [],
+      "rate_type_per_site": [],
+      "rate_type_per_unit": [],
+      "group_size": [],
+      "rate_per_time_frame": [],
+      "num_days": [],
+      "fee_sunday": [],
+      "fee_monday": [],
+      "fee_tuesday": [],
+      "fee_wednesday": [],
+      "fee_thursday": [],
+      "fee_friday": [],
+      "fee_saturday": [],
+      "fee_remarks": [],
+      "passes_accepted": [],
+      "lmtd_use_award_method": [],
+      "lmtd_use_award_type": [],
+      "latitude": [
+        "44.49929713",
+        "47.45210333",
+        "39.5658",
+        "37.50916667",
+        "47.64414423"
+      ],
+      "longitude": [
+        "-120.3867007",
+        "-113.65608833",
+        "-120.0564",
+        "-88.68305556",
+        "-91.13585222"
+      ],
+      "stacked_recsite_count": [
+        "1",
+        "2",
+        "4",
+        "8",
+        "10"
+      ],
+      "last_update": [
+        "2026/04/03 10:06:06+00",
+        "2026/02/23 15:00:58+00",
+        "2025/12/11 10:54:52+00",
+        "2025/03/11 09:18:05+00",
+        "2026/02/24 15:03:03+00"
+      ],
+      "globalid": [
+        "{8B5938C6-561E-4C7F-8D5B-0E7DFECC10B5}",
+        "{B0F25287-1AD9-4869-8489-890D6A5C4CF8}",
+        "{093870E9-DA43-48B4-917D-EE4EB96CCEE3}",
+        "{A7CC8226-E965-4433-ACC0-CF5FFC94D26E}",
+        "{327CC65E-BEC3-4409-8E19-F7619F7C888F}"
+      ]
+    },
+    "special_examples": {
+      "duplicated_site_id_examples": [
+        {
+          "site_id": "01001",
+          "count": 5,
+          "sample_records": [
+            {
+              "site_cn": "14894010314",
+              "globalid": "{EE2653FA-3887-4C0C-9B8C-09542BC3553E}",
+              "objectid": "1283964",
+              "site_name": "TIN POT",
+              "site_subtype": "TRAILHEAD"
+            },
+            {
+              "site_cn": "5130.002791",
+              "globalid": "{79E2F558-FD1C-4CB9-957D-DC423C9DA679}",
+              "objectid": "1291131",
+              "site_name": "LAKE ALICE CAMPGROUND",
+              "site_subtype": "CAMPGROUND"
+            },
+            {
+              "site_cn": "5156.002991",
+              "globalid": "{CB0124DD-110E-404B-AEF2-C78E57A7484B}",
+              "objectid": "1296701",
+              "site_name": "CORN CREEK TRAILHEAD",
+              "site_subtype": "TRAILHEAD"
+            }
+          ]
+        },
+        {
+          "site_id": "40000",
+          "count": 5,
+          "sample_records": [
+            {
+              "site_cn": "3460674010602",
+              "globalid": "{2EB7FC5D-89F0-4607-8557-1BFE422B53BF}",
+              "objectid": "1289290",
+              "site_name": "HOODOO CANYON",
+              "site_subtype": "TRAILHEAD"
+            },
+            {
+              "site_cn": "5246.007131",
+              "globalid": "{3B6C6F7A-5568-49F5-8C50-3AB06FB2A801}",
+              "objectid": "1290411",
+              "site_name": "BIGFORK RIVER",
+              "site_subtype": "BOATING SITE"
+            },
+            {
+              "site_cn": "5001.005781",
+              "globalid": "{15086073-C609-46C7-9627-FA1D91A613AF}",
+              "objectid": "1294886",
+              "site_name": "COLEMAN LAKE RECREATION AREA",
+              "site_subtype": "CAMPGROUND"
+            }
+          ]
+        },
+        {
+          "site_id": "40001",
+          "count": 5,
+          "sample_records": [
+            {
+              "site_cn": "1521162010602",
+              "globalid": "{B3DD457E-DDDE-4006-A8D5-A8B802027B31}",
+              "objectid": "1281615",
+              "site_name": "PINHOTI HWY. 278 (HIGHPOINT) TH",
+              "site_subtype": "TRAILHEAD"
+            },
+            {
+              "site_cn": "3460701010602",
+              "globalid": "{FDED440C-B8C8-4856-99F0-5F48E585672F}",
+              "objectid": "1288408",
+              "site_name": "RUFUS",
+              "site_subtype": "TRAILHEAD"
+            },
+            {
+              "site_cn": "695634010602",
+              "globalid": "{23CF548B-668A-4E4E-B788-DF661ABC7242}",
+              "objectid": "1293671",
+              "site_name": "SAILOR LAKE PICNIC",
+              "site_subtype": "PICNIC SITE"
+            }
+          ]
+        },
+        {
+          "site_id": "50001",
+          "count": 5,
+          "sample_records": [
+            {
+              "site_cn": "5094.003221",
+              "globalid": "{F8BD29F3-12E5-4A45-B467-51070D5BA56A}",
+              "objectid": "1280371",
+              "site_name": "HUNTER CREEK CG",
+              "site_subtype": "CAMPGROUND"
+            },
+            {
+              "site_cn": "1807296010602",
+              "globalid": "{E094C757-0A76-4141-A73E-2F2BCA28C88F}",
+              "objectid": "1283710",
+              "site_name": "HAZEL LAKE CAMPING - W57",
+              "site_subtype": "CAMPING AREA"
+            },
+            {
+              "site_cn": "4279615010602",
+              "globalid": "{622D3B73-78A5-4976-9024-875D4F4D1E87}",
+              "objectid": "1295447",
+              "site_name": "HARRIS LAKE CARRY DOWN",
+              "site_subtype": "BOATING SITE"
+            }
+          ]
+        },
+        {
+          "site_id": "50002",
+          "count": 5,
+          "sample_records": [
+            {
+              "site_cn": "1807367010602",
+              "globalid": "{5CBC68A0-0E58-4A9C-84E3-A486F3DA6E24}",
+              "objectid": "1286835",
+              "site_name": "BIG BASS LAKE - W30",
+              "site_subtype": "CAMPING AREA"
+            },
+            {
+              "site_cn": "5095.003221",
+              "globalid": "{747AA155-083A-4137-B340-949C650F77AD}",
+              "objectid": "1291633",
+              "site_name": "BEAR CREEK CG",
+              "site_subtype": "CAMPGROUND"
+            },
+            {
+              "site_cn": "5168.001291",
+              "globalid": "{76F6ACD9-8030-48C9-82E0-B21880DC5422}",
+              "objectid": "1294244",
+              "site_name": "BLAIR",
+              "site_subtype": "PICNIC SITE"
+            }
+          ]
+        },
+        {
+          "site_id": "50003",
+          "count": 5,
+          "sample_records": [
+            {
+              "site_cn": "1807499010602",
+              "globalid": "{44098D73-2676-4CB3-ACE3-672611011B71}",
+              "objectid": "1283017",
+              "site_name": "BIG BASS LAKE ACCESS W67",
+              "site_subtype": "BOATING SITE"
+            },
+            {
+              "site_cn": "4280089010602",
+              "globalid": "{DA58CCB4-07FE-4EE6-A2ED-9A13F71B9438}",
+              "objectid": "1298530",
+              "site_name": "BIRCH LAKE PLANTATION SKI AREA",
+              "site_subtype": "SKI AREA NORDIC"
+            },
+            {
+              "site_cn": "5174.001291",
+              "globalid": "{036CAA11-A807-426E-8DF8-DA6C0D6433E8}",
+              "objectid": "1301792",
+              "site_name": "WALLIS",
+              "site_subtype": "PICNIC SITE"
+            }
+          ]
+        },
+        {
+          "site_id": "50004",
+          "count": 5,
+          "sample_records": [
+            {
+              "site_cn": "1808199010602",
+              "globalid": "{4D7EC247-68D3-4844-93E0-8D95992A7838}",
+              "objectid": "1284337",
+              "site_name": "BIG BASS ISLAND - W68",
+              "site_subtype": "CAMPING AREA"
+            },
+            {
+              "site_cn": "13458010560",
+              "globalid": "{E9D24306-67BB-4AA9-9EE4-6DF7503B8A06}",
+              "objectid": "1289266",
+              "site_name": "SOUTH FORK BOISE RIVER DISPERSED",
+              "site_subtype": "FISHING SITE"
+            },
+            {
+              "site_cn": "5175.001291",
+              "globalid": "{96370CA3-68C4-4B12-BF61-4A7B5022C624}",
+              "objectid": "1302849",
+              "site_name": "HIDDEN VALLEY",
+              "site_subtype": "GROUP PICNIC SITE"
+            }
+          ]
+        },
+        {
+          "site_id": "50005",
+          "count": 5,
+          "sample_records": [
+            {
+              "site_cn": "5040.002001",
+              "globalid": "{D67B10A5-69A2-46B0-A08A-0CADCDE5CFEA}",
+              "objectid": "1280351",
+              "site_name": "POT CREEK",
+              "site_subtype": "INTERPRETIVE SITE"
+            },
+            {
+              "site_cn": "1808206010602",
+              "globalid": "{D7A359B2-B85D-4BC7-9227-51F533D5E7C5}",
+              "objectid": "1282510",
+              "site_name": "LITTLE BASS ISLAND - W13",
+              "site_subtype": "CAMPING AREA"
+            },
+            {
+              "site_cn": "5056010324",
+              "globalid": "{80BC0797-0FB1-4BA1-A8BA-5051AAE54E28}",
+              "objectid": "1283526",
+              "site_name": "WHITE RIVER EAST",
+              "site_subtype": "SNOWPARK"
+            }
+          ]
+        },
+        {
+          "site_id": "50006",
+          "count": 5,
+          "sample_records": [
+            {
+              "site_cn": "5177.001291",
+              "globalid": "{D87DA249-F5F1-4EF8-B3A9-92844CC8B682}",
+              "objectid": "1280289",
+              "site_name": "TIE CITY",
+              "site_subtype": "TRAILHEAD"
+            },
+            {
+              "site_cn": "13460010560",
+              "globalid": "{40DB8A76-A8C8-4B30-90BE-DEACABD021AA}",
+              "objectid": "1282297",
+              "site_name": "WORSWICK HOT SPRINGS",
+              "site_subtype": "TRAILHEAD"
+            },
+            {
+              "site_cn": "1808225010602",
+              "globalid": "{3C033F1C-737A-4AB6-B18D-47EA9CF30C23}",
+              "objectid": "1283254",
+              "site_name": "LONG LAKE - W38",
+              "site_subtype": "CAMPING AREA"
+            }
+          ]
+        },
+        {
+          "site_id": "1",
+          "count": 4,
+          "sample_records": [
+            {
+              "site_cn": "5464.006121",
+              "globalid": "{96FC63E1-9419-4E37-B34D-D7735119210A}",
+              "objectid": "1293005",
+              "site_name": "BOAT LAUNCH",
+              "site_subtype": "BOATING SITE"
+            },
+            {
+              "site_cn": "5467.006121",
+              "globalid": "{077B5F2B-6C67-4BC6-8867-5B30F8B78AFF}",
+              "objectid": "1295529",
+              "site_name": "BOAT LAUNCH",
+              "site_subtype": "BOATING SITE"
+            },
+            {
+              "site_cn": "5762.008061",
+              "globalid": "{FC3E5871-3BE1-490A-B379-EB184440CEA8}",
+              "objectid": "1301796",
+              "site_name": "UNIT 1",
+              "site_subtype": "CAMP UNIT"
+            }
+          ]
+        }
+      ],
+      "common_raw_water_values": [
+        {
+          "value": "No water is available",
+          "count": 3066
+        },
+        {
+          "value": "No drinking water is available",
+          "count": 2183
+        },
+        {
+          "value": "No",
+          "count": 1371
+        },
+        {
+          "value": "Yes, drinking water is available from a hand pump",
+          "count": 1105
+        },
+        {
+          "value": "Yes, drinking water is available from faucets",
+          "count": 914
+        },
+        {
+          "value": "Water can be treated or filtered from nearby water sources",
+          "count": 663
+        },
+        {
+          "value": "None",
+          "count": 306
+        },
+        {
+          "value": "No; drinking water is available at nearby campgrounds",
+          "count": 178
+        },
+        {
+          "value": "Potable Water",
+          "count": 145
+        },
+        {
+          "value": "Yes",
+          "count": 127
+        },
+        {
+          "value": "NOT AVAILABLE",
+          "count": 111
+        },
+        {
+          "value": "No, drinking water is not provided",
+          "count": 106
+        },
+        {
+          "value": "Drinking Water",
+          "count": 82
+        },
+        {
+          "value": "No potable water",
+          "count": 81
+        },
+        {
+          "value": "No water available",
+          "count": 81
+        },
+        {
+          "value": "Potable water not available.",
+          "count": 58
+        },
+        {
+          "value": "Not for drinking",
+          "count": 41
+        },
+        {
+          "value": "Yes, drinking water is available",
+          "count": 36
+        },
+        {
+          "value": "Not for drinking; water is available for animals/stock",
+          "count": 35
+        },
+        {
+          "value": "No potable water is available",
+          "count": 34
+        }
+      ],
+      "common_raw_restroom_values": [
+        {
+          "value": "Vault toilet(s)",
+          "count": 5348
+        },
+        {
+          "value": "No restroom available",
+          "count": 1750
+        },
+        {
+          "value": "Flush toilet(s)",
+          "count": 658
+        },
+        {
+          "value": "No",
+          "count": 598
+        },
+        {
+          "value": "Vault Toilet",
+          "count": 260
+        },
+        {
+          "value": "Vault",
+          "count": 257
+        },
+        {
+          "value": "Vault Toilet (1)",
+          "count": 192
+        },
+        {
+          "value": "Restrooms available nearby",
+          "count": 182
+        },
+        {
+          "value": "Vault toilet",
+          "count": 179
+        },
+        {
+          "value": "No ",
+          "count": 150
+        },
+        {
+          "value": "None",
+          "count": 149
+        },
+        {
+          "value": "Vault Restrooms Available.",
+          "count": 99
+        },
+        {
+          "value": "Portable toilet(s)",
+          "count": 86
+        },
+        {
+          "value": "vault toilet",
+          "count": 65
+        },
+        {
+          "value": "Composting toilet(s)",
+          "count": 62
+        },
+        {
+          "value": "Vault toilets",
+          "count": 57
+        },
+        {
+          "value": "Outhouse",
+          "count": 56
+        },
+        {
+          "value": "Vault Toilet (2)",
+          "count": 50
+        },
+        {
+          "value": "Vault Toilets",
+          "count": 46
+        },
+        {
+          "value": "Vault Toilet(s)",
+          "count": 44
+        }
+      ]
+    }
+  },
+  "Recreation_Area_Activities.csv": {
+    "column_samples": {
+      "X": [
+        "-120.2425",
+        "-120.939444",
+        "-120.943889",
+        "-120.893769",
+        "-121.616667"
+      ],
+      "Y": [
+        "41.450833",
+        "41.519722",
+        "41.51",
+        "41.306803",
+        "41.591944"
+      ],
+      "OBJECTID": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "RECAREANAME": [
+        "Pepperdine Trailhead",
+        "Duncan North Boating Site",
+        "Duncan South Boating Site",
+        "Red Tail Rim Trail North Trailhead",
+        "Schonchin Springs Campground"
+      ],
+      "LONGITUDE": [
+        "-120.242500",
+        "-120.939444",
+        "-120.943889",
+        "-120.893769",
+        "-121.616667"
+      ],
+      "LATITUDE": [
+        "41.450833",
+        "41.519722",
+        "41.510000",
+        "41.306803",
+        "41.591944"
+      ],
+      "RECAREAURL": [
+        "https://www.fs.usda.gov/recarea/modoc/recarea/?recid=71332",
+        "https://www.fs.usda.gov/recarea/modoc/recarea/?recid=71334",
+        "https://www.fs.usda.gov/recarea/modoc/recarea/?recid=71336",
+        "https://www.fs.usda.gov/recarea/modoc/recarea/?recid=71338",
+        "https://www.fs.usda.gov/recarea/modoc/recarea/?recid=71382"
+      ],
+      "OPEN_SEASON_START": [
+        "Facilities open as weather permits; usually early July to late October.",
+        "Facilities open as weather permits; usually mid-May to late October.",
+        "Facilities open as weather and road conditions permit; usually early June to late October.",
+        "Open all year.",
+        "As weather permits"
+      ],
+      "OPEN_SEASON_END": [
+        "12/16",
+        "September",
+        "Oct",
+        "End of October",
+        "December"
+      ],
+      "FORESTNAME": [
+        "Modoc National Forest",
+        "Allegheny National Forest",
+        "Shoshone National Forest",
+        "Carson National Forest",
+        "Monongahela National Forest"
+      ],
+      "RECAREAID": [
+        "71332",
+        "71334",
+        "71336",
+        "71338",
+        "71382"
+      ],
+      "MARKERTYPE": [
+        "/Internet/FSE_MEDIA/stelprdb5175876.png",
+        "/Internet/FSE_MEDIA/fsbdev2_016640.png",
+        "/Internet/FSE_MEDIA/fsbdev2_016599.png",
+        "/Internet/FSE_MEDIA/fsbdev2_016579.png",
+        "/Internet/FSE_MEDIA/fsbdev2_016657.png"
+      ],
+      "MARKERACTIVITY": [
+        "Trailhead",
+        "Boating - Non-Motorized",
+        "Day Hiking",
+        "Campground Camping",
+        "Boating - Motorized"
+      ],
+      "MARKERACTIVITYGROUP": [
+        "Trailhead",
+        "Water Activities",
+        "Hiking",
+        "Camping & Cabins",
+        "Winter Sports"
+      ],
+      "RECAREADESCRIPTION": [
+        "<p>Located on the northern most boundary of the South Warner Wilderness, Pepperdine Trailhead serves hikers and horsemen for short day trips and overnight excursions into and through the wilderness via the Summit Trail.&nbsp; The Summit Trail also connects with Owl Creek Trail which takes one along the eastern slopes of the Warners where Summit Trail stays mostly along the western slopes.</p>",
+        "<p>This is a primitive area without facilities.&nbsp; The boat ramp is gravel and dirt.&nbsp; There is a small parking lot and turn around.&nbsp; This area is recommended for cartop boats and small power boats.</p>",
+        "<p>This is a primitive area without facilities.&nbsp; The boat ramp is gravel and dirt.&nbsp; There is parking for boat trailers and room for turn around.&nbsp; Small motor boats and car top boats can launch from Duncan South.</p>",
+        "<p>In addition to ample parking,&nbsp;this Trailhead&nbsp;has a picnic site and hitching posts for tacking up horses for day rides.</p>",
+        "<p>This little campground is approximately 1 mile from the Headquarters Campground and gets most of its use when the four other Medicine Lake Campgrounds are full. If you are looking for close proximity to the lake but would prefer a quiet, more secluded environment, try Schonchin Springs Campground.</p><p><a href=\"http://www.fs.usda.gov/Internet/FSE_DOCUMENTS/fseprd1198455.pdf\">Map of the campground</a></p>"
+      ],
+      "ACTIVITYDESCRIPTION": [
+        "<p>\r\n\tThere are several picnic sites here.&nbsp; Each with a table and a fireplace.&nbsp; Water is available but&nbsp;only during the camping season.</p>\r\n",
+        "Away from the main lake this picnic site affords the visitor a quieter, more serene setting for a picnic.",
+        "<p>Seasonal obsidian collecting</p>\r\n",
+        "<p>Reservations are&nbsp;available, six months in advance, for overnight stays between July 14th&nbsp;and October 31st.&nbsp;</p>\r\n",
+        "<p>Hike along a truly ancient trail that follows the Pit River</p>\r\n"
+      ],
+      "PARENTACTIVITYNAME": [
+        "Horse Riding & Camping",
+        "Hiking",
+        "Water Activities",
+        "Fishing",
+        "Picnicking"
+      ],
+      "ACTIVITYNAME": [
+        "Horse Riding",
+        "Day Hiking",
+        "Horse Camping",
+        "Backpacking",
+        "Boating - Motorized"
+      ],
+      "ACTIVITYID": [
+        "104",
+        "50",
+        "30",
+        "51",
+        "78"
+      ],
+      "PARENTACTIVITYID": [
+        "52",
+        "49",
+        "77",
+        "39",
+        "69"
+      ],
+      "SPOTLIGHTDISPLAY": [
+        "N",
+        "Y"
+      ],
+      "ATTRACTIONDISPLAY": [
+        "N",
+        "Y"
+      ],
+      "ACCESSIBILITY": [
+        "<p>Accessible vault toilets</p>",
+        "<p>Accessible vault toilet</p>",
+        "<p>&nbsp;Accessible group shelters equipped&nbsp;with vault&nbsp;toilets and drinking water. Handicap accessible parking and toilets.</p><p>&nbsp;</p>",
+        "<p>The first 1700 feet of trail is a paved and has a wheelchair accessible path to the upper falls viewing platform.</p>",
+        "<p>The boardwalk for this area is wheelchair accessible.<br />&nbsp;</p>"
+      ],
+      "OPENSTATUS": [
+        "none",
+        "open",
+        "closed",
+        "unreachable",
+        "temporarily closed"
+      ],
+      "SHAPE": []
+    },
+    "special_examples": {
+      "duplicate_RECAREAID_ACTIVITYID_pair_examples": [],
+      "activity_names_mapping_to_multiple_ids": [
+        {
+          "ACTIVITYNAME": "Picnicking",
+          "ACTIVITYIDs": [
+            "69",
+            "70"
+          ],
+          "id_count": 2
+        },
+        {
+          "ACTIVITYNAME": "Scenic Driving",
+          "ACTIVITYIDs": [
+            "105",
+            "75"
+          ],
+          "id_count": 2
+        }
+      ],
+      "activity_ids_mapping_to_multiple_names": []
+    }
+  },
+  "national_parks_raw.csv": {
+    "column_samples": {
+      "": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "Name": [
+        "Acadia",
+        "American Samoa",
+        "Arches",
+        "Badlands",
+        "Big Bend"
+      ],
+      "Image": [],
+      "Location": [
+        "Maine.mw-parser-output .geo-default,.mw-parser-output .geo-dms,.mw-parser-output .geo-dec{display:inline}.mw-parser-output .geo-nondefault,.mw-parser-output .geo-multi-punct{display:none}.mw-parser-output .longitude,.mw-parser-output .latitude{white-space:nowrap}44°21′N 68°13′W﻿ / ﻿44.35°N 68.21°W",
+        "American Samoa14°15′S 170°41′W﻿ / ﻿14.25°S 170.68°W",
+        "Utah38°41′N 109°34′W﻿ / ﻿38.68°N 109.57°W",
+        "South Dakota43°45′N 102°30′W﻿ / ﻿43.75°N 102.50°W",
+        "Texas29°15′N 103°15′W﻿ / ﻿29.25°N 103.25°W"
+      ],
+      "Date established as park[7][12]": [
+        "February 26, 1919",
+        "October 31, 1988",
+        "November 12, 1971",
+        "November 10, 1978",
+        "June 12, 1944"
+      ],
+      "Area (2021)[13]": [
+        "49,071.40 acres (198.6 km2)",
+        "8,256.67 acres (33.4 km2)",
+        "76,678.98 acres (310.3 km2)",
+        "242,755.94 acres (982.4 km2)",
+        "801,163.21 acres (3,242.2 km2)"
+      ],
+      "Recreation visitors (2021)[11]": [
+        "4069098",
+        "8495",
+        "1806865",
+        "1224226",
+        "581220"
+      ],
+      "Description": [
+        "Covering most of Mount Desert Island and other coastal islands, Acadia features the tallest mountain on the Atlantic coast of the United States, granite peaks, ocean shoreline, woodlands, and lakes. There are freshwater, estuary, forest, and intertidal habitats.[14][15]",
+        "The southernmost national park is on three Samoan islands in the South Pacific. It protects coral reefs, rainforests, volcanic mountains, and white beaches. The area is also home to flying foxes, brown boobies, sea turtles, and 900 species of fish.[16]",
+        "This site features more than 2,000 natural sandstone arches, with some of the most popular arches in the park being Delicate Arch, Landscape Arch and Double Arch.[17] Millions of years of erosion have created these structures in a desert climate where the arid ground has life-sustaining biological soil crusts and potholes that serve as natural water-collecting basins. Other geologic formations include stone pinnacles, fins, and balancing rocks.[18]",
+        "The Badlands are a collection of buttes, pinnacles, spires, and mixed-grass prairies within the drainage basin of the White River, in southwestern South Dakota. They contain the largest known assemblage of late Eocene and Oligocene mammal fossils.[19] Wildlife includes bison, bighorn sheep, black-footed ferrets, and prairie dogs.[20]",
+        "Named for the prominent bend in the Rio Grande along the U.S.–Mexico border, this park encompasses a large and remote part of the Chihuahuan Desert. Its main attraction is backcountry recreation in the arid Chisos Mountains and in canyons along the river. A wide variety of Cretaceous and Tertiary fossils as well as cultural artifacts of Native Americans also exist within its borders.[21] (BR)[22]"
+      ]
+    },
+    "special_examples": {
+      "Location_examples": [
+        "Maine.mw-parser-output .geo-default,.mw-parser-output .geo-dms,.mw-parser-output .geo-dec{display:inline}.mw-parser-output .geo-nondefault,.mw-parser-output .geo-multi-punct{display:none}.mw-parser-output .longitude,.mw-parser-output .latitude{white-space:nowrap}44°21′N 68°13′W﻿ / ﻿44.35°N 68.21°W",
+        "American Samoa14°15′S 170°41′W﻿ / ﻿14.25°S 170.68°W",
+        "Utah38°41′N 109°34′W﻿ / ﻿38.68°N 109.57°W",
+        "South Dakota43°45′N 102°30′W﻿ / ﻿43.75°N 102.50°W",
+        "Texas29°15′N 103°15′W﻿ / ﻿29.25°N 103.25°W"
+      ],
+      "Area_examples": [
+        "49,071.40 acres (198.6 km2)",
+        "8,256.67 acres (33.4 km2)",
+        "76,678.98 acres (310.3 km2)",
+        "242,755.94 acres (982.4 km2)",
+        "801,163.21 acres (3,242.2 km2)"
+      ],
+      "Date_established_examples": [
+        "February 26, 1919",
+        "October 31, 1988",
+        "November 12, 1971",
+        "November 10, 1978",
+        "June 12, 1944"
+      ],
+      "Recreation_visitors_examples": [
+        "4069098",
+        "8495",
+        "1806865",
+        "1224226",
+        "581220"
+      ],
+      "names_containing_stars": [
+        "Carlsbad Caverns *",
+        "Grand Canyon *",
+        "Mesa Verde *",
+        "Redwood *",
+        "Wrangell–St. Elias *",
+        "Yosemite *"
+      ],
+      "names_containing_citations": [],
+      "names_with_unusual_whitespace": [
+        "Wrangell–St. Elias *"
+      ],
+      "names_with_any_flag": [
+        "Carlsbad Caverns *",
+        "Grand Canyon *",
+        "Mesa Verde *",
+        "Redwood *",
+        "Wrangell–St. Elias *",
+        "Yosemite *"
+      ]
+    }
+  }
+}
