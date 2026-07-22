@@ -476,6 +476,11 @@ def run_cleaning(
             "UUIDv5 URL namespace over the case-folded, whitespace-normalized cleaned name"
         ),
         "validation": "passed",
+        "later_phases": {
+            "sqlite_database": "not implemented",
+            "query_layer": "not implemented",
+            "streamlit": "not implemented",
+        },
     }
 
     processed_dir.mkdir(parents=True, exist_ok=True)
@@ -506,6 +511,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     print(f"- Processed parks: {summary['processed_park_row_count']}")
     print(f"- Parks with valid coordinates: {summary['valid_coordinate_park_count']}")
     print(f"- Recorded parse failures: {summary['parse_failure_count']}")
+    print("SQLite database build, query layer, and Streamlit are not implemented.")
     return 0
 
 

@@ -190,6 +190,11 @@ def run_calculation(
         "sort_order": ["park_id", "campground_id"],
         "cardinality_validation": "passed",
         "non_negative_distance_validation": "passed",
+        "later_phases": {
+            "sqlite_database": "not implemented",
+            "query_layer": "not implemented",
+            "streamlit": "not implemented",
+        },
     }
     _write_json(report_dir / "distance_summary.json", summary)
     return summary
@@ -220,6 +225,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     print(f"- Valid parks: {summary['valid_park_count']}")
     print(f"- Valid campgrounds: {summary['valid_campground_count']}")
     print(f"- Distance rows: {summary['distance_row_count']}")
+    print("SQLite database build, query layer, and Streamlit are not implemented.")
     return 0
 
 

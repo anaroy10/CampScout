@@ -12,7 +12,18 @@ htmlcov/
 
 # Raw and generated data
 data/raw/*.csv
-data/processed/*.csv
+data/campscout.db
+data/*.db-shm
+data/*.db-wal
+data/*.db-journal
+data/*.sqlite
+data/*.sqlite-shm
+data/*.sqlite-wal
+data/*.sqlite-journal
+data/*.sqlite3
+data/*.sqlite3-shm
+data/*.sqlite3-wal
+data/*.sqlite3-journal
 reports/generated/*
 reports/profiling/*
 !reports/profiling/.gitkeep
@@ -24,7 +35,6 @@ reports/profiling/*
 
 # Preserve documentation and placeholders
 !data/raw/README.md
-!data/processed/.gitkeep
 !reports/generated/.gitkeep
 !reports/profiling/.gitkeep
 

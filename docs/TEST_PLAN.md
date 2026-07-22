@@ -79,15 +79,19 @@ The current hashes in `DATA_SOURCES.md` may be used to verify that local scaffol
 
 ## Database tests
 
-Use a dedicated temporary MySQL schema or transaction-isolated test database. Verify:
+Use a temporary SQLite database file created under the test framework's temporary directory. Verify:
 
-- schema creation succeeds on the supported MySQL version;
+- database creation from all six processed CSVs succeeds without raw inputs;
 - primary, unique, and foreign-key constraints match the documented logical model;
+- required check constraints and indexes exist and are exercised;
+- every connection enables `PRAGMA foreign_keys = ON`;
 - repeated loads are idempotent or fail in the explicitly documented way;
 - a load rolls back on failure rather than leaving a partial dataset;
+- generated row counts and relationships match the processed inputs;
 - unknown states survive round trips;
 - Unicode and long source text survive round trips;
-- all user values are bound as parameters;
+- all Python values are bound with SQLite `?` or named placeholders;
+- application connections are read-only where practical;
 - activity filters join through Recreation Areas;
 - no campground-to-park foreign key exists; and
 - radius, activity, fee, water, restroom, and type filters compose correctly.
@@ -101,12 +105,13 @@ Use a dedicated temporary MySQL schema or transaction-isolated test database. Ve
 - Result cards show only available, source-backed values.
 - Details include distance, directions, activities, and an official URL when available.
 - Unsupported ratings, reviews, hookups, vehicle advice, booking, and ML recommendations are absent.
-- Database and configuration errors do not reveal credentials.
+- Database and configuration errors do not expose local system details or raw stack traces.
 
 ## Documentation and static checks
 
 - Verify all documented commands and paths on Windows PowerShell when their components exist.
-- Verify `.env` is ignored and `.env.example` contains keys but no secrets.
+- Verify the default database path is `data/campscout.db`, the optional `CAMPSCOUT_DB_PATH` override works when implemented, and no environment variable is required.
+- Verify raw CSVs and generated SQLite database/sidecar files are ignored while all six processed CSVs remain trackable.
 - Search for hard-coded credentials and unsafe SQL interpolation.
 - Update the specification, architecture, dictionary, decisions, and tests when schemas or business rules change.
 
@@ -124,4 +129,4 @@ The first command should name a concrete test module, for example `pytest tests/
 
 ## Release gate
 
-A future release is acceptable only when the full suite passes in the supported Windows environment, data-quality reports contain no unexplained critical violations, database migrations and loads succeed against a clean schema, and the documented end-to-end user flow has been manually smoke-tested.
+A future release is acceptable only when the full suite passes in the supported Windows environment, data-quality reports contain no unexplained critical violations, the SQLite database builds and validates from a clean clone's six processed CSVs, and the documented end-to-end user flow has been manually smoke-tested.

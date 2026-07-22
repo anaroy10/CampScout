@@ -2,7 +2,7 @@
 
 ## Status
 
-The profiling and CSV ETL layers are implemented. MySQL and Streamlit remain design targets; their table names, queries, and application entry points are proposals until those phases are completed.
+The profiling and CSV ETL layers are implemented. SQLite and Streamlit remain design targets; their table names, queries, and application entry points are proposals until those phases are completed. No database schema, database builder, query layer, or Streamlit page has been implemented.
 
 ## Component boundaries
 
@@ -13,10 +13,16 @@ data/raw/*.csv (immutable)
 etl/  profile -> validate -> normalize -> publish
         |
         v
-data/processed/  reproducible artifacts and quality reports
+data/processed/  six committed, reproducible CSV artifacts
         |
         v
-db/ + sql/  MySQL schema, loader, and parameterized read queries
+db/ + sql/  future SQLite schema, builder, and validation
+        |
+        v
+data/campscout.db  generated SQLite database (not committed)
+        |
+        v
+db/  future parameterized, read-only-where-practical query layer
         |
         v
 app/  Streamlit controls, result list, and campground details
@@ -27,7 +33,7 @@ scripts/ contains future developer entry points
 report/ contains future project-report source material
 ```
 
-Executable profiling and ETL modules are present under `etl/`. No MySQL loader, application SQL query layer, or Streamlit page is present yet.
+Executable profiling and ETL modules are present under `etl/`. No SQLite schema, database builder, application SQL query layer, or Streamlit page is present yet.
 
 ## Planned data flow
 
@@ -36,8 +42,11 @@ Executable profiling and ETL modules are present under `etl/`. No MySQL loader, 
 3. Validate required fields and quarantine or report invalid records without changing raw files.
 4. Normalize only with explicit, tested mappings. Keep raw descriptive values when normalization could lose information.
 5. Write deterministic processed artifacts under `data/processed/` and profiling output under `reports/profiling/`.
-6. Load the normalized entities into MySQL using transactions and parameterized statements.
-7. Query MySQL through a small data-access layer; the Streamlit layer should not construct SQL from string interpolation.
+6. Build `data/campscout.db` from all six processed CSVs using transactions, database constraints, and parameterized statements.
+7. Validate database row counts, keys, foreign keys, integrity constraints, and required indexes before accepting the generated database.
+8. Query SQLite through a small data-access layer; the Streamlit layer should not construct SQL from string interpolation.
+
+The six processed CSVs are committed so a clean clone can reproduce the future database-build workflow without possessing the raw source files. Raw CSVs remain excluded from Git, and running the complete ETL still requires obtaining the original sources. Processed CSVs are published only by the ETL pipeline.
 
 ## Proposed logical model
 
@@ -63,7 +72,7 @@ This associative entity records which activities belong to a Recreation Area. It
 
 ### Campground Recreation Area relationship
 
-Campgrounds link to a Recreation Area only when a `recid` extracted from the USDA portal URL exactly matches a processed `RECAREAID`. Name-only or fuzzy matches are never used to create links. Unresolved campgrounds remain unlinked and cannot receive invented activities. The future MySQL representation remains an open schema decision.
+Campgrounds link to a Recreation Area only when a `recid` extracted from the USDA portal URL exactly matches a processed `RECAREAID`. Name-only or fuzzy matches are never used to create links. Unresolved campgrounds remain unlinked and cannot receive invented activities. The future SQLite representation remains an open schema decision.
 
 ## Geographic relationship
 
@@ -73,20 +82,23 @@ National parks and campgrounds relate only through calculated geographic distanc
 park(latitude, longitude) -- Haversine calculation --> campground(latitude, longitude)
 ```
 
-The implemented CSV phase calculates the complete valid cross product with the Haversine formula and the 6,371.0088 km IUGG mean Earth radius. It sorts deterministically, retains full calculation precision, rounds only the exported value to six decimals, and validates cardinality. The result is approximate straight-line distance from the park's representative coordinate, not road or entrance distance. A future MySQL query may use a bounding box for performance, but final inclusion must still use an equivalent distance formula.
+The implemented CSV phase calculates the complete valid cross product with the Haversine formula and the 6,371.0088 km IUGG mean Earth radius. It sorts deterministically, retains full calculation precision, rounds only the exported value to six decimals, and validates cardinality. The result is approximate straight-line distance from the park's representative coordinate, not road or entrance distance. A future SQLite query may use indexed coordinates or precomputed distances for performance, but final inclusion must retain the documented distance semantics.
 
 ## Missing-value model
 
 Raw blanks remain missing. Normalized filter fields should support `YES`, `NO`, and `UNKNOWN` where a binary-looking source attribute is required. Free-text water and restroom descriptions should be preserved alongside any controlled category. A blank or ambiguous phrase must never become `NO` merely to simplify filtering.
 
-## Configuration and security
+## SQLite configuration and connection policy
 
-- Load `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, and `DB_PASSWORD` from the environment.
-- Keep local secrets in `.env`, which is excluded from Git.
-- Validate configuration at startup without logging passwords.
-- Use parameter placeholders supported by `mysql-connector-python` for values.
-- Allow-list identifiers such as sort columns; identifiers cannot be protected by value placeholders.
+- Default to the repository-relative path `data/campscout.db`.
+- Allow a future optional `CAMPSCOUT_DB_PATH` environment variable to override the default; the project must work without it.
+- Require no database server, database account, password, host, or port.
+- Enable foreign-key enforcement on every connection with `PRAGMA foreign_keys = ON` before database work.
+- Use SQLite `?` or named placeholders for values supplied from Python. Allow-list identifiers such as sort columns because identifiers cannot be protected by value placeholders.
+- Open application connections read-only where practical. Database creation, migration, and loading connections are necessarily writable.
+- Define primary keys, foreign keys, uniqueness, checks, and other integrity rules in the database; application validation complements rather than replaces them.
+- Keep `data/campscout.db` and SQLite journal, WAL, and shared-memory sidecar files out of Git.
 
 ## Failure handling and observability
 
-Future ETL should fail clearly on schema drift, invalid required coordinates, duplicate selected keys, or broken relationship assumptions. Expected data-quality exceptions should be counted and written to profiling reports. Database loads should be transactional and idempotent by design. User-facing failures should be actionable without exposing credentials or raw stack traces.
+Future ETL should fail clearly on schema drift, invalid required coordinates, duplicate selected keys, or broken relationship assumptions. Expected data-quality exceptions should be counted and written to profiling reports. The future SQLite database build should be transactional, deterministic, and idempotent by design. User-facing failures should be actionable without exposing local system details or raw stack traces.

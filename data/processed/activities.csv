@@ -1,0 +1,80 @@
+﻿ACTIVITYID,ACTIVITYNAME,PARENTACTIVITYID,PARENTACTIVITYNAME
+101,Cabin Rentals,28,Camping & Cabins
+102,Caving,116,Other Activities
+103,Geocaching & Letterboxing,116,Other Activities
+104,Horse Riding,52,Horse Riding & Camping
+105,Scenic Driving,75,Scenic Driving
+106,Target Shooting,116,Other Activities
+116,Other Activities,31178,
+117,Outdoor Learning,31178,
+118,Visitor Programs,117,Outdoor Learning
+119,Interpretive Areas,117,Outdoor Learning
+120,Visitor Centers,117,Outdoor Learning
+121,Disc Golf,116,Other Activities
+122,E-Biking,23,Bicycling
+19,Beachcombing,18,Beaches & Dunes
+20,Sand Play,18,Beaches & Dunes
+21,Dog sledding,18,Beaches & Dunes
+22,Tidepooling,18,Beaches & Dunes
+23,Bicycling,31178,
+24,Mountain Biking,23,Bicycling
+26,Road Cycling,23,Bicycling
+28,Camping & Cabins,31178,
+29,Campground Camping,28,Camping & Cabins
+30,Horse Camping,52,Horse Riding & Camping
+31,RV Camping,28,Camping & Cabins
+32,OHV Camping,65,OHV Riding & Camping
+33,Group Camping,28,Camping & Cabins
+34,Dispersed Camping,28,Camping & Cabins
+36,Climbing,31178,
+37,Rock Climbing,36,Climbing
+38,Mountain Climbing,36,Climbing
+39,Fishing,31178,
+40,Salt Water Fishing,39,Fishing
+41,Estuary Fishing,39,Fishing
+42,Lake and Pond Fishing,39,Fishing
+43,River and Stream Fishing,39,Fishing
+44,Ice Fishing,39,Fishing
+47,Hang Gliding,116,Other Activities
+49,Hiking,31178,
+50,Day Hiking,49,Hiking
+51,Backpacking,49,Hiking
+52,Horse Riding & Camping,31178,
+53,Hunting,43345,
+54,Big Game Hunting,53,Hunting
+55,Small Game Hunting,53,Hunting
+56,Game Bird/Waterfowl,53,Hunting
+57,Trapping,53,Hunting
+59,Gold Panning,72,Rocks & Minerals
+60,Metal Detecting,72,Rocks & Minerals
+61,Nature Viewing,31178,
+62,Viewing Wildlife,61,Nature Viewing
+63,Viewing Plants,61,Nature Viewing
+64,Viewing Scenery,61,Nature Viewing
+65,OHV Riding & Camping,31178,
+68,OHV Open Area Riding,65,OHV Riding & Camping
+69,Picnicking,31178,
+70,Picnicking,69,Picnicking
+71,Group Picnicking,69,Picnicking
+72,Rocks & Minerals,43345,
+73,Rockhounding,72,Rocks & Minerals
+74,Fossil Collecting,72,Rocks & Minerals
+75,Scenic Driving,31178,
+77,Water Activities,31178,
+78,Boating - Motorized,77,Water Activities
+79,Boating - Non-Motorized,77,Water Activities
+80,Scuba Diving,77,Water Activities
+81,Surfing,77,Water Activities
+82,Swimming,77,Water Activities
+83,Tubing,77,Water Activities
+84,Waterskiing,77,Water Activities
+85,Windsurfing,77,Water Activities
+86,Winter Sports,6762,
+87,Ice Skating,86,Winter Sports
+88,Sledding/Tubing,86,Winter Sports
+89,Skiing/Snowboarding,86,Winter Sports
+90,Mushing/Skijoring,86,Winter Sports
+91,XC Skiing/Snowshoeing,86,Winter Sports
+92,Snowmobiling,86,Winter Sports
+93,OHV Trail Riding,65,OHV Riding & Camping
+94,OHV Road Riding,65,OHV Riding & Camping

@@ -60,6 +60,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         return 1
 
     print("CampScout ETL pipeline completed successfully.")
+    print("SQLite database build, query layer, and Streamlit are not implemented.")
     return 0
 
 

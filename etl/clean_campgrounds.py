@@ -847,9 +847,8 @@ def run_cleaning(
         },
         "validation": "passed",
         "later_phases": {
-            "national_parks": "implemented in a downstream phase",
-            "park_campground_distances": "implemented in a downstream phase",
-            "mysql_loading": "not implemented",
+            "sqlite_database": "not implemented",
+            "query_layer": "not implemented",
             "streamlit": "not implemented",
         },
     }
@@ -891,8 +890,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     print(f"- Unmatched campgrounds retained: {summary['unmatched_campground_count']}")
     print(f"- Duplicate candidate pairs: {summary['duplicate_candidate_pair_count']}")
     print(f"- Dropped source rows: {summary['dropped_row_count']}")
-    print("National-park cleaning and distance calculation are available downstream.")
-    print("MySQL loading and Streamlit are not implemented.")
+    print("SQLite database build, query layer, and Streamlit are not implemented.")
     return 0
 
 

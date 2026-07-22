@@ -288,6 +288,11 @@ def test_generated_schema_and_subset_statistics_use_final_denominator(tmp_path):
     assert summary["campground_subset_missingness"]["directions"]["missing_percentage"] == 50.0
     assert summary["water_category_counts"]["UNKNOWN"] == 1
     assert summary["restroom_category_counts"]["UNKNOWN"] == 1
+    assert summary["later_phases"] == {
+        "sqlite_database": "not implemented",
+        "query_layer": "not implemented",
+        "streamlit": "not implemented",
+    }
     written = json.loads(
         (reports / "campground_cleaning_summary.json").read_text(encoding="utf-8")
     )

@@ -2,7 +2,7 @@
 
 ## Status and conventions
 
-This dictionary describes the implemented Recreation Area/activity, campground, national-park, and park-distance processed CSVs. It is not a deployed MySQL schema. Types and nullability for MySQL must be finalized before DDL is written.
+This dictionary describes the implemented Recreation Area/activity, campground, national-park, and park-distance processed CSVs. It is not a deployed SQLite schema. SQLite type affinities, nullability, constraints, and indexes must be finalized before DDL is written.
 
 The current snapshot was formally profiled with `python -m etl.profile_raw_data`. Generated column types, missingness, distinct counts, maximum text lengths, samples, and key checks are recorded under `reports/profiling/`; the facts below do not replace those generated reports.
 
@@ -14,6 +14,8 @@ Conventions:
 - Columns ending in `_raw` preserve unnormalized source text.
 - Latitude and longitude require range validation before a row participates in distance search.
 - Activity-phase processed CSVs retain the literal uppercase source column names. Proposed future database field names may use snake case.
+
+The future relational database will be generated at `data/campscout.db` from all six processed CSVs. Its schema must preserve the keys and normalized relationships documented here with primary keys, foreign keys, uniqueness and check constraints, appropriate indexes, transactional loading, and post-load validation. Every connection must enable SQLite foreign-key enforcement. These database details are requirements, not a claim that DDL or a loader already exists.
 
 ## `national_park`
 
@@ -151,6 +153,6 @@ The distance starts at the park's representative source coordinate. It is not ro
 - Whether `globalid` remains stable and unique across future source snapshots; the current phase validates every run and fails rather than silently replacing it.
 - Whether unsupported recreation-site subtypes should be included in a future product scope change.
 - Whether reviewed duplicate candidates represent distinct facilities or source duplicates.
-- Final SQL types, maximum lengths, indexes, and nullability.
+- Final SQLite type affinities, maximum-length checks where justified, indexes, and nullability.
 
 These are profiling or design tasks, not gaps to fill by assumption.

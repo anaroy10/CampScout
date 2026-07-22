@@ -60,10 +60,13 @@ Missing fields must be displayed as unknown or unavailable. They must not be sil
 
 ## Non-functional requirements
 
-- Target Windows, VS Code, Python, MySQL, and Streamlit.
+- Target Windows, VS Code, Python, SQLite, and Streamlit.
 - Keep raw inputs immutable and transformations reproducible.
-- Keep credentials in environment variables and out of the repository.
+- Default the database to the repository-relative path `data/campscout.db`, with an optional future `CAMPSCOUT_DB_PATH` override.
+- Require no database credentials or server configuration.
 - Use only relative repository paths.
+- Enable SQLite foreign-key enforcement on every connection and preserve database constraints rather than relying only on application validation.
+- Use SQLite parameter placeholders for all values passed from Python, and prefer read-only application connections where practical.
 - Document schema and business-rule changes in the same change that introduces them.
 - Add and run tests appropriate to each implemented component.
 
@@ -93,4 +96,4 @@ Source columns related to unsupported features may be retained in immutable raw 
 
 ## Current phase
 
-Raw profiling and the complete deterministic CSV ETL are implemented, including national-park cleaning and the full valid park-campground distance matrix. MySQL loading, data-access queries, and the Streamlit interface remain future phases.
+Raw profiling and the complete deterministic CSV ETL are implemented, including national-park cleaning and the full valid park-campground distance matrix. The SQLite schema and database builder, data-access queries, and Streamlit interface remain future phases.

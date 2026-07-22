@@ -353,9 +353,9 @@ def run_cleaning(
         "activity_conflict_count": len(activity_conflicts),
         "foreign_key_validation": "passed",
         "later_phases": {
-            "campgrounds": "implemented separately",
-            "national_parks": "implemented in a downstream phase",
-            "park_campground_distances": "implemented in a downstream phase",
+            "sqlite_database": "not implemented",
+            "query_layer": "not implemented",
+            "streamlit": "not implemented",
         },
     }
 
@@ -411,8 +411,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         "- Dropped relationship source rows: "
         f"{summary['dropped_relationship_source_row_count']}"
     )
-    print("Campground cleaning is available as a separate phase.")
-    print("National-park cleaning and distance calculation are available downstream.")
+    print("SQLite database build, query layer, and Streamlit are not implemented.")
     return 0
 
 

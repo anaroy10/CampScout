@@ -135,6 +135,11 @@ def test_run_cleaning_publishes_clean_rows_summary_and_failure_report(tmp_path):
     assert summary["valid_coordinate_park_count"] == 1
     assert summary["removed_unnamed_columns"] == [""]
     assert summary["excluded_fully_empty_columns"] == ["Image"]
+    assert summary["later_phases"] == {
+        "sqlite_database": "not implemented",
+        "query_layer": "not implemented",
+        "streamlit": "not implemented",
+    }
 
 
 def test_nonempty_image_column_requires_schema_review(tmp_path):

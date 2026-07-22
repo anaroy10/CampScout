@@ -745,7 +745,7 @@ def render_findings(summary: Mapping[str, object], examples: Mapping[str, object
             "",
             "## Interpretation limits",
             "",
-            "- Profiling records source facts only; it does not clean, normalize, load MySQL, query application data, or implement Streamlit.",
+            "- Profiling records source facts only; it does not clean, normalize, build the SQLite database, query application data, or implement Streamlit.",
             "- Uniqueness proves only uniqueness in this local snapshot, not stability across future source releases.",
             "- Missing amenity text remains unknown; the profiler does not convert it to `NO`.",
             "- Source categories and duplicate examples are review evidence, not automatic merge or eligibility decisions.",

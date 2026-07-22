@@ -2,7 +2,7 @@
 
 These rules apply to the entire repository and to every future task unless a more restrictive instruction is provided.
 
-1. The project is CampScout, a Python, MySQL, and Streamlit application.
+1. The project is CampScout, a Python, SQLite, and Streamlit application.
 2. Raw CSV files are immutable and must never be edited.
 3. Do not invent missing values.
 4. Missing amenity information remains `UNKNOWN`, not `NO`.
@@ -18,7 +18,13 @@ These rules apply to the entire repository and to every future task unless a mor
 14. Run relevant tests before declaring a task complete.
 15. Preserve raw identifiers without accidental float conversion or `.0` suffixes.
 16. Update documentation whenever business rules or schemas change.
-17. The target environment is Windows, VS Code, Python, MySQL, and Streamlit.
+17. The target environment is Windows, VS Code, Python, SQLite, and Streamlit.
+18. The default SQLite database path must be relative to the repository.
+19. Generated SQLite database files and sidecar files must never be committed.
+20. Every SQLite connection must enable foreign-key enforcement.
+21. SQL executed from Python must use SQLite parameter placeholders.
+22. Application database connections should be read-only where practical.
+23. Database constraints must not be replaced with application-only validation.
 
 ## Scope guardrails
 
