@@ -22,6 +22,7 @@ from db.connection import (
 
 
 SCHEMA_PATH = REPOSITORY_ROOT / "sql" / "schema.sql"
+VIEWS_PATH = REPOSITORY_ROOT / "sql" / "views.sql"
 DEFAULT_PROCESSED_DIR = REPOSITORY_ROOT / "data" / "processed"
 
 
@@ -235,6 +236,13 @@ def create_schema(connection: sqlite3.Connection, schema_path: Path = SCHEMA_PAT
         connection.execute(statement)
 
 
+def create_views(connection: sqlite3.Connection, views_path: Path = VIEWS_PATH) -> None:
+    """Create the database views on an active transaction."""
+
+    for statement in iter_sql_statements(views_path.read_text(encoding="utf-8")):
+        connection.execute(statement)
+
+
 def _row_values(row: dict[str, str], spec: TableSpec) -> tuple[Any, ...]:
     return tuple(item.converter(row[item.csv_name]) for item in spec.columns)
 
@@ -347,6 +355,7 @@ def build_database(
             spec.table_name: load_table(connection, spec, source_dir)
             for spec in TABLE_SPECS
         }
+        create_views(connection)
         _validate_loaded_database(connection)
         connection.commit()
         return row_counts

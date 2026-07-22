@@ -61,7 +61,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 
     print("CampScout ETL pipeline completed successfully.")
     print("Build SQLite separately with: python -m db.build_database --reset")
-    print("The application query layer and Streamlit are not implemented.")
+    print("The Streamlit interface is not implemented.")
     return 0
 
 

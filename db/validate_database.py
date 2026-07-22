@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import Optional, Sequence
 
 from db.build_database import DEFAULT_PROCESSED_DIR, TABLE_SPECS, iter_sql_statements
+from db.apply_indexes import EXPECTED_INDEXES, EXPECTED_VIEWS
 from db.connection import (
     REPOSITORY_ROOT,
     PathLike,
@@ -97,7 +98,29 @@ def _validate_tables(
             f"Required STRICT table(s) are not strict: {', '.join(non_strict)}"
         )
 
-    checks = 1 + len(expected_tables)
+    actual_views = {
+        row[0]
+        for row in connection.execute(
+            "SELECT name FROM sqlite_schema WHERE type = ?", ("view",)
+        )
+    }
+    missing_views = EXPECTED_VIEWS - actual_views
+    if missing_views:
+        raise DatabaseValidationError(
+            f"Missing required view(s): {', '.join(sorted(missing_views))}"
+        )
+
+    for index_name, expected_columns in EXPECTED_INDEXES.items():
+        actual_columns = tuple(
+            row[2] for row in connection.execute(f"PRAGMA index_info({index_name})")
+        )
+        if actual_columns != expected_columns:
+            raise DatabaseValidationError(
+                f"Index {index_name} has columns {actual_columns}; "
+                f"expected {expected_columns}."
+            )
+
+    checks = 1 + len(expected_tables) + len(EXPECTED_VIEWS) + len(EXPECTED_INDEXES)
     actual_counts: dict[str, int] = {}
     for table_name, expected_count in expected_counts.items():
         actual_count = connection.execute(

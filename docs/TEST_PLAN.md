@@ -94,7 +94,7 @@ The database suite uses temporary SQLite database files created under the test f
 - application connections are read-only where practical;
 - no campground-to-park foreign key or direct campground-activity relationship exists.
 
-Application query composition remains deferred until the application query layer is implemented.
+Implemented query-layer tests verify parameter binding and injection resistance, positive radii, bound result limits, every supported category filter, distance ordering, ALL-activity matching, linked and unlinked campground behavior, detail/activity views, completeness reporting, window-function results, exact non-redundant indexes, covering-index plan selection, and short-lived read-only connections.
 
 ## Application tests
 

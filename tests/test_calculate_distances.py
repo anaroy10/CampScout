@@ -78,7 +78,7 @@ def test_output_cardinality_uses_every_valid_pair_and_is_sorted(tmp_path):
     assert summary["invalid_park_coordinate_count"] == 1
     assert summary["invalid_campground_coordinate_count"] == 1
     assert summary["later_phases"] == {
-        "sqlite_database": "not implemented",
-        "query_layer": "not implemented",
+        "sqlite_database": "implemented separately",
+        "query_layer": "implemented separately",
         "streamlit": "not implemented",
     }

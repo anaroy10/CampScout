@@ -12,6 +12,7 @@ from db.build_database import (
     create_schema,
     null_if_missing,
 )
+from db.apply_indexes import apply_indexes
 from db.validate_database import validate_database
 
 
@@ -36,6 +37,7 @@ def schema_connection(tmp_path):
 def built_database(tmp_path_factory):
     database_path = tmp_path_factory.mktemp("database") / "campscout-test.db"
     row_counts = build_database(database_path, processed_dir=PROCESSED_DIR)
+    apply_indexes(database_path)
     return database_path, row_counts
 
 

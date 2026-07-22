@@ -143,12 +143,14 @@ The distance starts at the park's representative source coordinate. It is not ro
 
 | Filter | Required behavior |
 |---|---|
-| Activity | Join campground to its resolved Recreation Area, then to `recreation_area_activity` and `activity` |
+| Activity | Join campground to its resolved Recreation Area, then to `recreation_area_activity` and `activity`; multiple selections require every distinct selected activity |
 | Fee | Filter on `YES`, `NO`, or `UNKNOWN`; never map missing fee data to `NO` |
 | Water | Use a reviewed category plus the raw description; missing is `UNKNOWN` |
 | Restroom | Use a reviewed type plus the raw description; missing is `UNKNOWN` |
 | Campground type | Use only approved categories derived from `site_subtype` profiling |
 | Radius | Compare a calculated `distance_km` to the positive user-supplied radius |
+
+When no activity filter is selected, campgrounds with SQL NULL `recarea_id` remain eligible. When one or more activities are selected, the required inner match excludes those unlinked campgrounds. `campground_activity_details` exposes only the documented Recreation Area path. `campground_data_completeness` reports link, official URL, directions, and known fee/water/restroom flags without turning missing values into negative values.
 
 ## SQLite relational constraints
 
@@ -158,7 +160,7 @@ The distance starts at the park's representative source coordinate. It is not ro
 - The Recreation Area activity and park distance tables use composite primary keys and foreign keys to both parents.
 - Park and campground coordinates are required and range-checked; Recreation Area usable coordinates are nullable and range-checked.
 - Campground type, fee state, water category, and restroom category use CHECK constraints that preserve `UNKNOWN`.
-- Distance must be non-negative. Indexes support Recreation Area joins, reverse bridge lookups, campground distance lookups, and future park/radius access.
+- Distance must be non-negative. Application indexes support covering park/radius access in distance order, reverse activity lookups, and campground-to-Recreation-Area joins.
 
 ## Unresolved dictionary items
 

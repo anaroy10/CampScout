@@ -289,8 +289,8 @@ def test_generated_schema_and_subset_statistics_use_final_denominator(tmp_path):
     assert summary["water_category_counts"]["UNKNOWN"] == 1
     assert summary["restroom_category_counts"]["UNKNOWN"] == 1
     assert summary["later_phases"] == {
-        "sqlite_database": "not implemented",
-        "query_layer": "not implemented",
+        "sqlite_database": "implemented separately",
+        "query_layer": "implemented separately",
         "streamlit": "not implemented",
     }
     written = json.loads(

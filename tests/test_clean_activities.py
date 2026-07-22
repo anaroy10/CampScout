@@ -127,8 +127,8 @@ def test_run_cleaning_builds_entities_bridge_and_audit_reports(tmp_path):
     assert summary["dropped_relationship_source_row_count"] == 3
     assert summary["foreign_key_validation"] == "passed"
     assert summary["later_phases"] == {
-        "sqlite_database": "not implemented",
-        "query_layer": "not implemented",
+        "sqlite_database": "implemented separately",
+        "query_layer": "implemented separately",
         "streamlit": "not implemented",
     }
     assert json.loads((reports / "activity_cleaning_summary.json").read_text(encoding="utf-8")) == summary

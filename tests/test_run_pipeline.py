@@ -26,7 +26,7 @@ def test_pipeline_calls_all_phases_in_dependency_order(monkeypatch, capsys, tmp_
     assert "Completed distance calculation phase" in output
     assert "pipeline completed successfully" in output
     assert "python -m db.build_database --reset" in output
-    assert "application query layer and Streamlit are not implemented" in output
+    assert "Streamlit interface is not implemented" in output
 
 
 def test_pipeline_stops_and_returns_nonzero_when_a_phase_fails(

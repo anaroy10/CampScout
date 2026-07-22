@@ -63,7 +63,7 @@ No database server, database user, password, host, port, or mandatory environmen
 
 ## Current implementation status
 
-Raw-data profiling, the complete CSV transformation pipeline, and the SQLite database layer are implemented. The application query layer and Streamlit interface are not. The pipeline cleans Recreation Areas and activities, cleans campgrounds, cleans national parks, and calculates every valid park-campground distance. The campground phase uses `data/processed/recreation_areas.csv` only to validate Recreation Area identifiers extracted from USDA portal URLs; it does not fuzzy-link unmatched records.
+Raw-data profiling, the complete CSV transformation pipeline, the SQLite database layer, and the read-only application query layer are implemented. The Streamlit interface is not. The pipeline cleans Recreation Areas and activities, cleans campgrounds, cleans national parks, and calculates every valid park-campground distance. The campground phase uses `data/processed/recreation_areas.csv` only to validate Recreation Area identifiers extracted from USDA portal URLs; it does not fuzzy-link unmatched records.
 
 Run an individual phase from the repository root when needed:
 
@@ -110,12 +110,19 @@ Python must provide SQLite 3.37.0 or newer because the schema uses `STRICT` tabl
 
 ```powershell
 python -m db.build_database --reset
+python -m db.apply_indexes
 python -m db.validate_database
 ```
 
-The builder loads parent tables before child tables in one explicit transaction, verifies each CSV-derived row count, and runs SQLite foreign-key and integrity checks before committing. `--reset` is deliberately restricted to `data/campscout.db`; it refuses to delete an environment-overridden or unrelated path. Without `--reset`, the builder refuses to overwrite an existing database.
+The builder loads parent tables before child tables in one explicit transaction, creates the query views, verifies each CSV-derived row count, and runs SQLite foreign-key and integrity checks before committing. The index command atomically installs and verifies the three justified application indexes. `--reset` is deliberately restricted to `data/campscout.db`; it refuses to delete an environment-overridden or unrelated path. Without `--reset`, the builder refuses to overwrite an existing database.
 
 `CAMPSCOUT_DB_PATH` can select a different database for non-reset builds and future read-only application connections. Relative override paths are resolved from the repository root rather than the current shell directory.
+
+## Query layer
+
+`app/queries.py` opens a new read-only connection for each operation and closes it before returning. It supports park and activity lists, distance-ordered radius searches, bound result limits, campground/fee/water/restroom filters, ALL-selected-activity filtering through Recreation Areas, campground details and activities, per-park counts, nearest-N window queries, known-amenity free campgrounds, and completeness reporting.
+
+Every user value is bound with SQLite `?` placeholders. The only dynamic SQL structure is a trusted optional-predicate allow-list and the generated number of placeholders for selected activity IDs.
 
 Run all tests with:
 
@@ -123,7 +130,7 @@ Run all tests with:
 pytest -q
 ```
 
-National-park cleaning, distance generation, and the SQLite database layer are implemented. The application query layer and Streamlit application are not implemented yet.
+National-park cleaning, distance generation, the SQLite database layer, and the application query layer are implemented. The Streamlit application is not implemented yet.
 
 ## Future application command — not implemented yet
 
@@ -135,7 +142,7 @@ streamlit run app/main.py
 
 ```
 
-Do not infer implementation details from this placeholder command. It may change when the interface is designed. The repository does not yet contain an application query layer or a Streamlit page.
+Do not infer implementation details from this placeholder command. It may change when the interface is designed. The repository does not yet contain a Streamlit page.
 
 ## Documentation
 

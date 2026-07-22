@@ -2,7 +2,7 @@
 
 ## Status
 
-The profiling, CSV ETL, and SQLite database layers are implemented. The application query layer and Streamlit page remain future phases.
+The profiling, CSV ETL, SQLite database, and read-only application query layers are implemented. The Streamlit page remains a future phase.
 
 ## Component boundaries
 
@@ -22,7 +22,7 @@ db/ + sql/  implemented SQLite schema, builder, connection, and validation
 data/campscout.db  generated SQLite database (not committed)
         |
         v
-db/  future parameterized application query layer
+app/queries.py  implemented parameterized, short-lived read-only query layer
         |
         v
 app/  Streamlit controls, result list, and campground details
@@ -33,7 +33,7 @@ scripts/ contains future developer entry points
 report/ contains future project-report source material
 ```
 
-Executable profiling and ETL modules are present under `etl/`. The SQLite schema and commands are present under `sql/` and `db/`. No application SQL query layer or Streamlit page is present yet.
+Executable profiling and ETL modules are present under `etl/`. The SQLite schema and commands are present under `sql/` and `db/`, and the application-facing queries are isolated in `app/queries.py`. No Streamlit page is present yet.
 
 ## Data flow
 
@@ -44,7 +44,7 @@ Executable profiling and ETL modules are present under `etl/`. The SQLite schema
 5. Write deterministic processed artifacts under `data/processed/` and profiling output under `reports/profiling/`.
 6. Build `data/campscout.db` from all six processed CSVs using one explicit transaction, database constraints, and parameterized statements.
 7. Validate database row counts, keys, foreign keys, controlled vocabularies, matrix cardinality, integrity constraints, and required indexes before accepting the generated database.
-8. Query SQLite through a small data-access layer; the Streamlit layer should not construct SQL from string interpolation.
+8. Query SQLite through the small read-only data-access layer; the future Streamlit layer must not construct SQL from string interpolation.
 
 The six processed CSVs are committed so a clean clone can reproduce the future database-build workflow without possessing the raw source files. Raw CSVs remain excluded from Git, and running the complete ETL still requires obtaining the original sources. Processed CSVs are published only by the ETL pipeline.
 
@@ -98,6 +98,24 @@ Raw blanks remain missing. Normalized filter fields should support `YES`, `NO`, 
 - Open application connections read-only where practical. Database creation, migration, and loading connections are necessarily writable.
 - Define primary keys, foreign keys, uniqueness, checks, and other integrity rules in the database; application validation complements rather than replaces them.
 - Keep `data/campscout.db` and SQLite journal, WAL, and shared-memory sidecar files out of Git.
+
+## Query layer and indexes
+
+Every application operation creates a short-lived read-only connection through `db/connection.py`, materializes its result, and closes the connection. Values use `?` bindings, including radius and LIMIT. Optional filters come from fixed SQL fragments. Multiple activity IDs generate only the required placeholder list; matching groups by Recreation Area and requires `COUNT(DISTINCT activity_id)` to equal the distinct selected count.
+
+The application index set is installed with `python -m db.apply_indexes`:
+
+- `idx_park_distance_campground (park_id, distance_km, campground_id)` supports the park/radius range and requested distance order as a covering distance-table lookup.
+- `idx_activity_recarea (activity_id, recarea_id)` supports selected-activity lookup before Recreation Areas are grouped.
+- `idx_campgrounds_recarea_id (recarea_id)` supports Recreation Area joins and the activity-detail view.
+
+The primary keys already cover the opposite relationship directions, so no duplicate indexes are added. Standalone campground type, fee, water, and restroom indexes were evaluated with the real core plan but not selected: the planner first restricts the small candidate set by park and radius, then fetches each campground by its primary key and applies the category predicates.
+
+### Recorded query-plan evidence
+
+With a fresh current-data database before application indexes, `EXPLAIN QUERY PLAN` searched `park_campground_distances` using its primary-key autoindex on `park_id`, searched campgrounds by primary key, and reported `USE TEMP B-TREE FOR ORDER BY`.
+
+After applying indexes, the same Yosemite/100 km representative query reported `SEARCH d USING COVERING INDEX idx_park_distance_campground (park_id=? AND distance_km<?)` and a campground primary-key lookup. It no longer reported a temporary ORDER BY B-tree. The filtered plan retained this access path. The ALL-activity plan additionally reported `SEARCH raa USING COVERING INDEX idx_activity_recarea (activity_id=?)` and a temporary B-tree for the required Recreation Area grouping. Exact runnable statements and observed plan details are stored in `sql/explain.sql`; these observations are planner evidence, not latency claims.
 
 ## Failure handling and observability
 

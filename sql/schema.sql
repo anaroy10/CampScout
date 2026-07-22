@@ -101,15 +101,3 @@ CREATE TABLE park_campground_distances (
     distance_km REAL NOT NULL CHECK (distance_km >= 0.0),
     PRIMARY KEY (park_id, campground_id)
 ) STRICT;
-
-CREATE INDEX idx_campgrounds_recarea_id
-    ON campgrounds (recarea_id);
-
-CREATE INDEX idx_recreation_area_activities_activity_id
-    ON recreation_area_activities (activity_id);
-
-CREATE INDEX idx_park_campground_distances_campground_id
-    ON park_campground_distances (campground_id);
-
-CREATE INDEX idx_park_campground_distances_park_distance
-    ON park_campground_distances (park_id, distance_km);

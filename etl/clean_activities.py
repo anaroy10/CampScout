@@ -353,8 +353,8 @@ def run_cleaning(
         "activity_conflict_count": len(activity_conflicts),
         "foreign_key_validation": "passed",
         "later_phases": {
-            "sqlite_database": "not implemented",
-            "query_layer": "not implemented",
+            "sqlite_database": "implemented separately",
+            "query_layer": "implemented separately",
             "streamlit": "not implemented",
         },
     }
@@ -411,7 +411,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         "- Dropped relationship source rows: "
         f"{summary['dropped_relationship_source_row_count']}"
     )
-    print("SQLite database build, query layer, and Streamlit are not implemented.")
+    print("Build/query layers are separate; the Streamlit interface is not implemented.")
     return 0
 
 
