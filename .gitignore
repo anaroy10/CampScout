@@ -1,0 +1,32 @@
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Secrets
+.env
+.streamlit/secrets.toml
+
+# Raw and generated data
+data/raw/*.csv
+data/processed/*.csv
+reports/generated/*
+reports/profiling/*
+
+# Preserve documentation and placeholders
+!data/raw/README.md
+!data/processed/.gitkeep
+!reports/generated/.gitkeep
+!reports/profiling/.gitkeep
+
+# Local files
+*.log
+*.tmp
+*.bak
+
+# Operating system
+.DS_Store
+Thumbs.db
