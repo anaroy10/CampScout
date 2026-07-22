@@ -1,8 +1,8 @@
-# Proposed data dictionary
+# Data dictionary
 
 ## Status and conventions
 
-This dictionary describes the implemented Recreation Area/activity and campground processed CSVs plus the intended model for later phases. It is not a deployed MySQL schema. Types and nullability for MySQL must be finalized before DDL is written.
+This dictionary describes the implemented Recreation Area/activity, campground, national-park, and park-distance processed CSVs. It is not a deployed MySQL schema. Types and nullability for MySQL must be finalized before DDL is written.
 
 The current snapshot was formally profiled with `python -m etl.profile_raw_data`. Generated column types, missingness, distinct counts, maximum text lengths, samples, and key checks are recorded under `reports/profiling/`; the facts below do not replace those generated reports.
 
@@ -17,23 +17,21 @@ Conventions:
 
 ## `national_park`
 
-The profiled file has 63 rows and 8 literal source columns. `Image` is empty in all 63 rows. Six `Name` values contain `*`; one of those names (`Wrangell–St. Elias *`) also contains unusual whitespace. No park name contains a bracketed citation in this snapshot. These are source observations only; no name cleanup has been implemented.
+Implemented artifact: `data/processed/national_parks.csv`. The current output contains 63 records, one for every source row. The unnamed source index is removed rather than used for identity, and the fully empty `Image` column is excluded. Parse failures are left blank in the processed field and written to `reports/generated/park_parse_failures.csv`; the current snapshot has none.
 
-| Proposed field | Meaning | Source / rule |
+| Processed field | Meaning | Source / rule |
 |---|---|---|
-| `park_id` | Internal surrogate primary key | Generated; never sourced from row position |
-| `source_row_id` | Preserved unnamed source index | Unnamed first column; ingest as text |
-| `name_raw` | Original park name including annotations | `Name` |
-| `display_name` | User-facing park name | Deterministic cleanup with explicit tests |
-| `state_or_territory` | Source-backed location label | Parsed cautiously from `Location` |
-| `latitude` | Validated park latitude | Parsed from the coordinate portion of `Location` |
-| `longitude` | Validated park longitude | Parsed from the coordinate portion of `Location` |
-| `established_date` | Park establishment date | `Date established as park[7][12]` after strict parsing |
-| `area_raw` | Original area text | `Area (2021)[13]` |
-| `recreation_visitors_2021` | Visitor count labeled for 2021 | `Recreation visitors (2021)[11]` |
-| `description` | Source description | `Description`; citation markers may require documented cleanup |
+| `park_id` | Stable processed key | UUIDv5 in the URL namespace over `https://campscout.local/national-park/` plus the case-folded, whitespace-normalized cleaned name; independent of source order and unnamed index |
+| `name` | User-facing park name | HTML entities and whitespace normalized; trailing marker stars removed |
+| `state_or_territory` | Cleaned source location label | Text preceding coordinates in `Location`, with CSS, scripts, HTML tags, BOMs, and unrelated markup removed; multi-state labels remain source-backed text |
+| `latitude` | Validated decimal latitude | Decimal coordinate pair in `Location`, falling back to degrees/minutes/seconds; `N` is positive and `S` is negative; range `-90..90` |
+| `longitude` | Validated decimal longitude | Parsed with latitude; `E` is positive and `W` is negative; range `-180..180` |
+| `established_date` | ISO park establishment date | Numeric citations removed from `Date established as park[7][12]`, then strict full-month parsing to `YYYY-MM-DD` |
+| `area_acres` | Numeric acreage | First non-negative numeric acres value from `Area (2021)[13]`; grouping commas removed without converting square-kilometer text |
+| `recreation_visitors_2021` | Integer visitor count labeled for 2021 | `Recreation visitors (2021)[11]`; optional grouping commas removed; decimals and prose are not coerced |
+| `description` | Cleaned source description | Whitespace and entities normalized and numeric citation markers such as `[14]` removed |
 
-There is intentionally no campground foreign key on this entity.
+There is intentionally no campground foreign key on this entity. A park with invalid coordinates remains auditable in this artifact but does not participate in the distance matrix.
 
 ## `campground`
 
@@ -125,9 +123,17 @@ Implemented artifact: `data/processed/recreation_area_activities.csv`.
 
 The composite CSV key is `(RECAREAID, ACTIVITYID)`. Duplicate source pairs are removed. The generated snapshot contains 51,713 relationships and no duplicate source pairs. Its 769 rows missing either required identifier are excluded from the relationship and preserved in `reports/generated/dropped_activity_rows.csv`. Foreign-key consistency is validated before any artifact is published. No campground identifier belongs in this table.
 
-## Derived query value: `distance_km`
+## `park_campground_distance`
 
-`distance_km` is not a foreign key or source attribute. It is the approximate great-circle distance calculated from the selected park coordinates and each campground's coordinates. The formula, Earth-radius constant, precision, and boundary behavior must be documented and unit tested. Results at or below the requested radius are eligible.
+Implemented artifact: `data/processed/park_campground_distances.csv`. It is a deterministic complete cross product of parks and campgrounds with valid coordinates, sorted by `park_id` and then `campground_id`. The current snapshot contains 303,030 rows: 63 valid parks multiplied by 4,810 valid campgrounds.
+
+| Processed field | Meaning | Source / rule |
+|---|---|---|
+| `park_id` | Park identifier | Validated reference to `national_parks.csv.park_id` |
+| `campground_id` | Campground identifier | Validated reference to `campgrounds.csv.campground_id` |
+| `distance_km` | Approximate straight-line kilometers | Haversine great-circle distance using the 6,371.0088 km IUGG mean Earth radius; full precision is retained during calculation and only the CSV value is rounded to six decimal places |
+
+The distance starts at the park's representative source coordinate. It is not road distance and not distance from a park entrance. Negative or non-finite results are rejected, and publication requires the output cardinality to equal valid park count multiplied by valid campground count. Results at or below a requested radius are eligible.
 
 ## Filter semantics
 

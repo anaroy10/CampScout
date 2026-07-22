@@ -93,4 +93,4 @@ Source columns related to unsupported features may be retained in immutable raw 
 
 ## Current phase
 
-This repository is in the scaffold and design phase. This document specifies future behavior; it does not claim that any executable component exists.
+Raw profiling and the complete deterministic CSV ETL are implemented, including national-park cleaning and the full valid park-campground distance matrix. MySQL loading, data-access queries, and the Streamlit interface remain future phases.

@@ -4,7 +4,7 @@ CampScout is a planned Python, MySQL, and Streamlit application for finding Fore
 
 The result view is planned to show approximate straight-line distance, campground details, directions, Recreation Area activities, and an official URL. Ratings, reviews, hookups, vehicle-length recommendations, booking, and machine-learning recommendations are outside the project scope.
 
-## Planned architecture
+## Architecture
 
 The intended data flow is:
 
@@ -17,7 +17,7 @@ immutable raw CSV files
         -> Streamlit user interface
 ```
 
-Activities will be modeled on Recreation Areas, not campgrounds. National parks and campgrounds will not have a direct relationship; proximity will be calculated from their coordinates. See `docs/ARCHITECTURE.md` for the proposed boundaries and data model.
+Activities are modeled on Recreation Areas, not campgrounds. National parks and campgrounds have no direct foreign-key relationship; the ETL materializes their calculated straight-line distances from validated coordinates. See `docs/ARCHITECTURE.md` for the component boundaries and data model.
 
 ## Expected raw files
 
@@ -59,16 +59,18 @@ Edit `.env` locally with the MySQL connection values. The `.env` file is ignored
 
 ## Current implementation status
 
-Raw-data profiling, Recreation Area/activity cleaning, and campground cleaning are implemented. The campground phase reads `data/raw/Recreation_Sites_INFRA.csv`; it uses `data/processed/recreation_areas.csv` only to validate Recreation Area identifiers extracted from USDA portal URLs. It does not fuzzy-link unmatched records.
+Raw-data profiling and the complete CSV transformation pipeline are implemented. The pipeline cleans Recreation Areas and activities, cleans campgrounds, cleans national parks, and calculates every valid park-campground distance. The campground phase uses `data/processed/recreation_areas.csv` only to validate Recreation Area identifiers extracted from USDA portal URLs; it does not fuzzy-link unmatched records.
 
-Run either standalone cleaning phase from the repository root:
+Run an individual phase from the repository root when needed:
 
 ```powershell
 python -m etl.clean_activities
 python -m etl.clean_campgrounds
+python -m etl.clean_parks
+python -m etl.calculate_distances
 ```
 
-The pipeline runs activities first and campgrounds second, then explicitly reports that national-park cleaning is not implemented:
+The supported full command creates missing output directories, runs all four phases in dependency order, logs each phase, and stops with a non-zero exit code if a phase fails validation:
 
 ```powershell
 python -m etl.run_pipeline
@@ -86,7 +88,17 @@ The campground cleaner:
 - reports exact normalized-name pairs within 1 km as possible duplicates without merging them; and
 - validates keys, categories, coordinates, Recreation Area links, identifier formatting, and output count before publishing artifacts.
 
-Outputs are `data/processed/campgrounds.csv`, `reports/generated/campground_cleaning_summary.json`, `reports/generated/unmatched_campgrounds.csv`, `reports/generated/duplicate_candidates.csv`, and `reports/generated/dropped_campground_rows.csv`. Unsupported source subtypes and invalid required data have separate drop categories.
+The park cleaner removes the unnamed source index and fully empty image column, normalizes whitespace and non-breaking spaces, removes trailing name stars and numeric description citations, parses ISO establishment dates, acreage, visitor counts, and signed coordinates, and records any parse failure without inventing a value. Its UUIDv5 `park_id` is derived from the normalized cleaned name rather than source row position.
+
+The distance phase uses the Haversine formula and the 6,371.0088 km IUGG mean Earth radius. It emits one row per valid park-campground pair, preserves full precision during calculation, rounds only exported `distance_km` to six decimal places, sorts by both identifiers, rejects negative or non-finite results, and validates the complete cross-product cardinality. These values are straight-line distances from each park's representative coordinate, not road or entrance distances.
+
+Principal outputs are:
+
+- `data/processed/recreation_areas.csv`, `activities.csv`, and `recreation_area_activities.csv`;
+- `data/processed/campgrounds.csv`;
+- `data/processed/national_parks.csv`;
+- `data/processed/park_campground_distances.csv`; and
+- deterministic cleaning, failure, matching, and distance reports under `reports/generated/`.
 
 Run all tests with:
 
@@ -94,7 +106,7 @@ Run all tests with:
 pytest -q
 ```
 
-National-park cleaning, the MySQL loader and application queries, and the Streamlit application are not implemented yet.
+National-park cleaning and distance generation are implemented. The MySQL loader, application queries, and Streamlit application are not implemented yet.
 
 ## Future commands — not implemented yet
 

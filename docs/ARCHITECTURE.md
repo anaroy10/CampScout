@@ -1,8 +1,8 @@
-# Planned architecture
+# Architecture
 
 ## Status
 
-This is a design target, not an implemented system. Table names, column names, and entry points remain proposals until ETL profiling and schema work are completed.
+The profiling and CSV ETL layers are implemented. MySQL and Streamlit remain design targets; their table names, queries, and application entry points are proposals until those phases are completed.
 
 ## Component boundaries
 
@@ -27,7 +27,7 @@ scripts/ contains future developer entry points
 report/ contains future project-report source material
 ```
 
-No executable ETL, loader, SQL query, or Streamlit page is present yet.
+Executable profiling and ETL modules are present under `etl/`. No MySQL loader, application SQL query layer, or Streamlit page is present yet.
 
 ## Planned data flow
 
@@ -43,13 +43,11 @@ No executable ETL, loader, SQL query, or Streamlit page is present yet.
 
 ### National Park
 
-A park has a surrogate key, cleaned display name, source attributes, and validated latitude/longitude parsed from the raw location field. It has no campground foreign key.
+A processed park has a deterministic UUIDv5 key, cleaned name, source-backed state/location label, parsed source attributes, and validated latitude/longitude from the raw location field. It has no campground foreign key. Parse failures are audited rather than filled with invented values.
 
 ### Campground
 
-The final campground primary key will be selected after profiling. site_id will not be used as the global primary key because it is duplicated. A unique source identifier such as site_cn or globalid, or a surrogate key, will be selected based on profiling evidence.
-
-The exact eligible `site_subtype` set is deliberately unresolved. Values such as `CAMPGROUND`, `GROUP CAMPGROUND`, `CAMPING AREA`, `HORSE CAMP`, and unit-level types occur in the source, and substring matching alone would mix facilities with child units. A documented eligibility rule must precede ETL implementation.
+The processed campground key is the complete and unique source `globalid`; duplicated `site_id` remains an audit attribute. Eligibility is an exact normalized match on `CAMPGROUND`, `GROUP CAMPGROUND`, or `HORSE CAMP`. The cleaner validates the key, categories, required coordinates, and output count on every run.
 
 ### Recreation Area
 
@@ -65,9 +63,7 @@ This associative entity records which activities belong to a Recreation Area. It
 
 ### Campground Recreation Area relationship
 
-Campgrounds need a deterministic link to a Recreation Area before activity filtering is valid. The site source provides names and URLs but not an immediately documented `RECAREAID` field. Future profiling may derive an exact ID from an authoritative URL or another stable source attribute, then validate it against the activity dataset.
-
-Name-only or fuzzy matches may be emitted as review candidates, but they must not be merged automatically. Unresolved campgrounds remain unlinked and must not be assigned invented activities. The final cardinality and physical representation (nullable foreign key versus an audited bridge) remain an open schema decision.
+Campgrounds link to a Recreation Area only when a `recid` extracted from the USDA portal URL exactly matches a processed `RECAREAID`. Name-only or fuzzy matches are never used to create links. Unresolved campgrounds remain unlinked and cannot receive invented activities. The future MySQL representation remains an open schema decision.
 
 ## Geographic relationship
 
@@ -77,7 +73,7 @@ National parks and campgrounds relate only through calculated geographic distanc
 park(latitude, longitude) -- Haversine calculation --> campground(latitude, longitude)
 ```
 
-The first implementation should use a documented Earth radius and return kilometers. It may calculate Haversine distance in a parameterized MySQL query or in a tested application service. A latitude/longitude bounding box can reduce candidates, but the final inclusion decision must use the distance formula. The UI must describe the result as approximate straight-line distance.
+The implemented CSV phase calculates the complete valid cross product with the Haversine formula and the 6,371.0088 km IUGG mean Earth radius. It sorts deterministically, retains full calculation precision, rounds only the exported value to six decimals, and validates cardinality. The result is approximate straight-line distance from the park's representative coordinate, not road or entrance distance. A future MySQL query may use a bounding box for performance, but final inclusion must still use an equivalent distance formula.
 
 ## Missing-value model
 

@@ -2,7 +2,7 @@
 
 ## Status
 
-No executable tests are implemented in the scaffold phase. This document defines the tests required as CampScout components are added. Tests should use small fixtures or temporary databases and must never modify files under `data/raw/`.
+Executable profiling and CSV ETL tests are implemented. Database and application sections remain the verification plan for future phases. Tests use small fixtures and temporary output directories and never modify files under `data/raw/`.
 
 ## Test principles
 
@@ -34,8 +34,8 @@ The current hashes in `DATA_SOURCES.md` may be used to verify that local scaffol
 
 - Parse representative northern, southern, eastern, and western coordinate values.
 - Ignore scraped CSS and invisible characters in the location field without selecting unrelated numbers.
-- Preserve the raw park name while applying only the approved display-name cleanup.
-- Reject or quarantine ambiguous and out-of-range coordinates.
+- Apply only approved park-name cleanup and derive identity from the cleaned name rather than row position.
+- Leave ambiguous and out-of-range coordinates out of the distance matrix while recording parse failures.
 - Parse visitor counts without presenting them as current-year metrics.
 
 ### Campgrounds
@@ -110,9 +110,7 @@ Use a dedicated temporary MySQL schema or transaction-isolated test database. Ve
 - Search for hard-coded credentials and unsafe SQL interpolation.
 - Update the specification, architecture, dictionary, decisions, and tests when schemas or business rules change.
 
-## Planned execution levels
-
-Once tests exist:
+## Execution levels
 
 ```powershell
 # Fast unit tests for a component
@@ -122,7 +120,7 @@ pytest tests/<component>
 pytest
 ```
 
-These commands are planning targets only at the current scaffold stage; there are no executable test cases yet.
+The first command should name a concrete test module, for example `pytest tests/test_clean_parks.py`.
 
 ## Release gate
 

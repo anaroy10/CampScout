@@ -32,9 +32,9 @@ The implemented area-activity bridge contains 51,713 unique `(RECAREAID, ACTIVIT
 
 ## D-005 — Calculate park proximity
 
-**Status:** Accepted
+**Status:** Accepted and implemented
 
-National parks and campgrounds are related by a great-circle distance calculation over validated coordinates. A campground does not store a park foreign key. The interface will label this value as approximate straight-line distance in kilometers.
+National parks and campgrounds are related by a Haversine great-circle distance calculation over validated coordinates. A campground does not store a park foreign key. The processed matrix uses the 6,371.0088 km IUGG mean Earth radius, retains full precision during calculation, exports six decimal places, and is validated as the complete valid park-by-campground cross product. The interface will label this value as approximate straight-line distance in kilometers from the park's representative coordinate, not road or entrance distance.
 
 ## D-006 — Preserve unknown amenity states
 
@@ -120,13 +120,29 @@ The campground cleaner extracts the first non-blank case-insensitive `recid` que
 
 A possible duplicate pair must have the same normalized display name and coordinates no more than 1 km apart by the Haversine formula with a 6,371.0088 km mean Earth radius. Name normalization uppercases and replaces punctuation/whitespace runs with a single space. Every candidate report row contains both source identifiers, both names, both coordinate pairs, and calculated distance. The threshold is a review heuristic, not evidence sufficient to merge records, so the cleaner never merges candidates.
 
+## D-018 — Clean scraped national-park fields conservatively
+
+**Status:** Accepted and implemented
+
+The unnamed CSV index is presentation metadata and is removed. The `Image` column is excluded only after each run confirms that it is fully empty. Park names receive whitespace/entity normalization and trailing marker-star removal. Numeric bracket citations are removed from descriptions and dates; establishment dates use strict full-month parsing, acreage comes only from the numeric acres portion, and visitor counts accept only non-negative integer syntax. Location parsing prefers the explicit decimal coordinate pair and falls back to degrees/minutes/seconds while applying all four compass signs and geographic range checks. CSS, script, HTML, BOM, and unrelated scraped markup are removed from the retained location label.
+
+Unparseable values stay blank and are recorded with source row, source field, raw value, and reason in `reports/generated/park_parse_failures.csv`. A row without a usable cleaned name cannot form a park entity and is reported rather than assigned an invented name or row-based identity.
+
+## D-019 — Generate deterministic park identities and distance artifacts
+
+**Status:** Accepted and implemented
+
+`park_id` is UUIDv5 in the standard URL namespace over the fixed `https://campscout.local/national-park/` prefix plus the case-folded, whitespace-normalized cleaned name. It is independent of source order and the discarded source index; uniqueness is revalidated on every run.
+
+`data/processed/park_campground_distances.csv` contains exactly one row for every park and campground with valid coordinates and is sorted by `park_id`, then `campground_id`. Negative and non-finite distances are rejected. The count must equal valid park count multiplied by valid campground count before the phase is accepted.
+
 ## Open questions requiring evidence
 
 1. Is `globalid` stable and unique across multiple source snapshots, or only within the current file?
 2. Should the optional many-campgrounds-to-one-Recreation-Area link remain a nullable field when the MySQL schema is designed, or be represented by an audited relationship table?
 3. Which reported duplicate candidates represent distinct facilities, and which represent source duplicates?
-4. Should park-to-campground distance be calculated in MySQL or in a Python service after a database bounding-box query?
+4. Should the materialized CSV distance matrix be loaded as a MySQL table, or should a future database implementation recalculate distance after a bounding-box query?
 
 Each answer must be based on profiling or an authoritative source definition, recorded here, reflected in the data dictionary, and covered by tests before implementation is declared complete.
 
-The current cleaner resolves campground eligibility, current-snapshot key selection, URL-based Recreation Area validation, amenity mappings, display-name precedence, and the official URL rule. It does not claim cross-release key stability, adjudicate duplicate candidates, design the future database representation, or implement park-distance queries.
+The current ETL resolves campground eligibility, current-snapshot key selection, URL-based Recreation Area validation, amenity mappings, display-name precedence, national-park cleaning, stable processed park identity, and the complete park-distance CSV. It does not claim campground-key stability across releases, adjudicate duplicate candidates, design the future database representation, or implement application queries.
