@@ -1,8 +1,46 @@
 # CampScout
 
-CampScout is a planned Python, SQLite, and Streamlit application for finding Forest Service campgrounds near United States national parks. A user will choose a national park and a radius in kilometers, then narrow nearby results using activities available in each campground's Recreation Area, fee status, water availability, restroom type, and campground type.
+CampScout is a Python, SQLite, and Streamlit application for finding Forest Service campgrounds near United States national parks. A user chooses a national park and a radius in kilometers, then narrows nearby results using activities available in each campground's Recreation Area, fee status, water availability, restroom type, and campground type.
 
-The result view is planned to show approximate straight-line distance, campground details, directions, Recreation Area activities, and an official URL. Ratings, reviews, hookups, vehicle-length recommendations, booking, and machine-learning recommendations are outside the project scope.
+The result view shows approximate straight-line distance, campground details, directions, Recreation Area activities, and an official URL. Ratings, reviews, hookups, vehicle-length recommendations, booking, and machine-learning recommendations are outside the project scope.
+
+## Quick start
+
+1. Install Python 3.10 or newer from [python.org](https://www.python.org/downloads/windows/). Keep the Python launcher enabled during installation.
+2. Clone or download this repository.
+3. Double-click `run_campscout.bat` in the repository root.
+
+The launcher creates `.venv` when needed, installs `requirements.txt` on first setup, verifies the six committed processed CSVs, builds and validates `data/campscout.db` when it is absent, and starts Streamlit. Raw files, MySQL, Workbench, the SQLite command-line tool, credentials, and an `.env` file are not required.
+
+To explicitly rebuild only the default generated database from PowerShell:
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts\run_campscout.ps1 -RebuildDatabase
+```
+
+## Full ETL reproduction
+
+1. Obtain the three original raw files listed below.
+2. Place them under `data/raw/` with the exact documented filenames; do not edit them.
+3. Run the optional ETL workflow:
+
+   ```powershell
+   powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts\run_etl.ps1
+   ```
+
+4. Rebuild the database:
+
+   ```powershell
+   powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts\build_database.ps1 -Rebuild
+   ```
+
+For the complete development gate, including raw profiling and ETL, run:
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts\full_validation.ps1 -RunEtl
+```
+
+See `docs/RUNBOOK.md` for the quick-start flow, individual script commands, safety boundaries, validation coverage, and troubleshooting.
 
 ## Architecture
 
@@ -131,6 +169,8 @@ After building, indexing, and validating the database, start the application fro
 ```powershell
 python -m streamlit run streamlit_app.py
 ```
+
+The Windows workflow uses `scripts/run_app.ps1`, which validates the database and starts the same official root command: `python -m streamlit run streamlit_app.py`.
 
 The interface supports park and radius selection, ALL-selected-activity matching, optional campground and amenity filters, resettable controls, distance-ordered paginated results, a park/campground map, and on-demand campground details. Stable park and activity lookups use `st.cache_data`; search and detail queries still open short-lived read-only connections and never load the complete distance matrix into Python.
 

@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-07-22T18:33:04.388189+00:00",
+  "generated_at_utc": "2026-07-23T00:05:41.448932+00:00",
   "profiling_rules": {
     "missing_value": "empty or whitespace-only CSV field",
     "distinct_count": "distinct non-missing literal values",

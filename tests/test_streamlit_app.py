@@ -337,3 +337,4 @@ def test_documented_root_command_starts_healthy_and_stops_cleanly(tmp_path):
     assert "python -m streamlit run streamlit_app.py" in (
         REPOSITORY_ROOT / "README.md"
     ).read_text(encoding="utf-8")
+

@@ -29,11 +29,11 @@ app/  Streamlit controls, result list, and campground details
 
 tests/ verifies transformation rules, database behavior, and user flows
 reports/ stores profiling and generated report outputs
-scripts/ contains future developer entry points
+scripts/ contains Windows quick-start and validation entry points
 report/ contains future project-report source material
 ```
 
-Executable profiling and ETL modules are present under `etl/`. The SQLite schema and commands are present under `sql/` and `db/`, and the application-facing queries are isolated in `app/queries.py`. No Streamlit page is present yet.
+Executable profiling and ETL modules are present under `etl/`. The SQLite schema and commands are present under `sql/` and `db/`, the application-facing queries are isolated in `app/queries.py`, and the Streamlit interface is implemented under `app/` with a project-root compatibility entrypoint.
 
 ## Data flow
 
@@ -48,7 +48,7 @@ Executable profiling and ETL modules are present under `etl/`. The SQLite schema
 
 ## Streamlit presentation
 
-`streamlit_app.py` is the project-root executable entrypoint and imports the application module from `app/app.py`. Keeping the executable outside the package prevents the `app.py` filename from shadowing the `app` package during Streamlit startup. Stable park and activity lookups are cached as data, never as a mutable SQLite connection. Searches are capped at 500 database rows and paginated in the interface; detail and Recreation Area activity data are loaded only for the selected campground. The built-in Streamlit map receives only the selected park and bounded returned campgrounds, with distinct colors and marker sizes.
+`streamlit_app.py` is the only official Streamlit executable entrypoint and imports the application module from `app/app.py`. It is launched from the repository root with `python -m streamlit run streamlit_app.py`. Keeping the executable outside the package prevents the `app.py` filename from shadowing the `app` package during Streamlit startup. Stable park and activity lookups are cached as data, never as a mutable SQLite connection. Searches are capped at 500 database rows and paginated in the interface; detail and Recreation Area activity data are loaded only for the selected campground. The built-in Streamlit map receives only the selected park and bounded returned campgrounds, with distinct colors and marker sizes.
 
 The UI preserves `UNKNOWN`, `NONE`, and `NOT_AVAILABLE` as different display states, uses the documented straight-line-distance wording, and shows a database setup command without exposing the resolved local path. It does not expose ratings, reviews, hookups, vehicle guidance, booking, or recommendations.
 
